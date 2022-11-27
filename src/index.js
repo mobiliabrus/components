@@ -11,7 +11,7 @@ if (!window.$docsify) {
   window.$docsify = {};
 }
 
-window.$docsify.vueComponents = Object.assign(window.$docsify.vueComponents || {}, {
+window.$docsify.vueComponents = {
   'a-img': img,
   'a-secret': secret,
   'a-flight': flight,
@@ -20,7 +20,8 @@ window.$docsify.vueComponents = Object.assign(window.$docsify.vueComponents || {
   'a-carousel': carousel,
   'a-badge': badge,
   'a-tooltip': tooltip,
-});
+  ...(window.$docsify.vueComponents || {}),
+};
 
 if (!Array.isArray(window.$docsify.plugins)) {
   window.$docsify.plugins = [];
