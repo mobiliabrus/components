@@ -8169,7 +8169,7 @@
     }
   };
 
-  var Carousel = window.antd.Carousel;
+  var Carousel = window.antd && window.antd.Carousel;
   var template$9 = htmlMinify("<a-carousel autoplay>\n<div v-if=\"img\" v-for=\"i in img\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</a-carousel>");
   var carousel = {
     template: template$9,

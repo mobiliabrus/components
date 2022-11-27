@@ -1,7 +1,7 @@
 import { htmlMinify } from "./util";
 import img from './a-img'
 
-const Carousel = window.antd.Carousel;
+const Carousel = window.antd && window.antd.Carousel;
 
 const template = htmlMinify(`<a-carousel autoplay>
 <div v-if="img" v-for="i in img">
