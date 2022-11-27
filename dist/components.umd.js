@@ -8177,18 +8177,16 @@
   if (!window.$docsify) {
     window.$docsify = {};
   }
-  if (!window.$docsify.vueComponents) {
-    window.$docsify.vueComponents = {
-      "a-img": img,
-      "a-secret": secret,
-      "a-flight": flight,
-      "a-map": map,
-      "a-hotel": hotel,
-      "a-carousel": carousel,
-      "a-badge": badge,
-      "a-tooltip": tooltip
-    };
-  }
+  window.$docsify.vueComponents = Object.assign(window.$docsify.vueComponents || {}, {
+    'a-img': img,
+    'a-secret': secret,
+    'a-flight': flight,
+    'a-map': map,
+    'a-hotel': hotel,
+    'a-carousel': carousel,
+    'a-badge': badge,
+    'a-tooltip': tooltip
+  });
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
   }
@@ -8196,15 +8194,15 @@
     hook.beforeEach(function (raw) {
       var reg = /`{3}<([^`]+)>\n([^`]+)`{3}/g;
       return raw.replace(reg, function (_, c, p) {
-        var slot = "";
-        var props = "";
+        var slot = '';
+        var props = '';
         p.split(/\n/).forEach(function (q) {
-          var _q$trim$split = q.trim().split(":"),
+          var _q$trim$split = q.trim().split(':'),
             _q$trim$split2 = _slicedToArray(_q$trim$split, 2),
             prop = _q$trim$split2[0],
             value = _q$trim$split2[1];
           if (prop) {
-            if (typeof value === "undefined") {
+            if (typeof value === 'undefined') {
               slot = prop;
             } else {
               props += " ".concat(prop, "=\"").concat(value, "\"");
