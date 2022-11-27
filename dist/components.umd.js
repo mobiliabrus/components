@@ -8146,6 +8146,34 @@
     }
   };
 
+  var css_248z$4 = ".badge {\n  border-radius: 2px;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  box-sizing: border-box;\n  margin: 0 2px;\n  vertical-align: text-top;\n}\n\n.badge, .badge-title, .badge-content {\n  display: inline-block;\n  color: #fff;\n  font-size: .7rem;\n  font-weight: 600;\n  font-family: system-ui;\n  white-space: pre-wrap;\n  line-height: 1.26rem;\n}\n\n.badge-title, .badge-content {\n  padding: 0 4px;\n}\n\n.badge-title {\n  background-color: #aaa;\n}\n\n.badge-content {\n  background-color: #75a49e;\n}\n";
+  styleInject(css_248z$4);
+
+  var badge = {
+    template: '<span class="badge" :style="{ display: inline ? \'inline-block\' : \'block\' }"><span v-if="title" class="badge-title">{{ title }}</span><span class="badge-content"><slot></slot></span></span>',
+    props: {
+      title: {
+        type: String
+      },
+      inline: {
+        type: Boolean,
+        default: false
+      }
+    }
+  };
+
+  var css_248z$5 = ".tooltip {\n    border-bottom: 1px dotted red;\n    display: inline-block;\n}\n\n.tooltip:hover .tooltip-inner {\n    opacity: 1;\n    display: block;\n}\n\n.tooltip-inner {\n    -webkit-user-select: none;\n       -moz-user-select: none;\n            user-select: none;\n    opacity: 0;\n    display: none;\n    transition: opacity .15s ease;\n    position: absolute;\n    transform: translateY(-100%);\n    min-width: 30px;\n    padding: 3px 8px;\n    color: #fff;\n    text-align: left;\n    text-decoration: none;\n    word-wrap: break-word;\n    background-color: rgba(0, 0, 0, 0.75);\n    border-radius: 2px;\n    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);\n}";
+  styleInject(css_248z$5);
+
+  var tooltip = {
+    template: '<span class="tooltip"><span class="tooltip-inner">{{title}}</span><slot></slot></span>',
+    props: {
+      title: {
+        type: String
+      }
+    }
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -8156,7 +8184,9 @@
       "a-flight": flight,
       "a-map": map,
       "a-hotel": hotel,
-      "a-carousel": carousel
+      "a-carousel": carousel,
+      "a-badge": badge,
+      "a-tooltip": tooltip
     };
   }
   if (!Array.isArray(window.$docsify.plugins)) {

@@ -1,24 +1,26 @@
-import img from "./components/a-img";
-import secret from "./components/a-secret";
-import flight from "./components/a-flight";
-import map from "./components/a-map";
-import hotel from "./components/a-hotel";
-import carousel from "./components/a-carousel";
+import img from './components/a-img';
+import secret from './components/a-secret';
+import flight from './components/a-flight';
+import map from './components/a-map';
+import hotel from './components/a-hotel';
+import carousel from './components/a-carousel';
+import badge from './components/a-badge';
+import tooltip from './components/a-tooltip';
 
 if (!window.$docsify) {
   window.$docsify = {};
 }
 
-if (!window.$docsify.vueComponents) {
-  window.$docsify.vueComponents = {
-    "a-img": img,
-    "a-secret": secret,
-    "a-flight": flight,
-    "a-map": map,
-    "a-hotel": hotel,
-    "a-carousel": carousel,
-  };
-}
+window.$docsify.vueComponents = Object.assign(window.$docsify.vueComponents || {}, {
+  'a-img': img,
+  'a-secret': secret,
+  'a-flight': flight,
+  'a-map': map,
+  'a-hotel': hotel,
+  'a-carousel': carousel,
+  'a-badge': badge,
+  'a-tooltip': tooltip,
+});
 
 if (!Array.isArray(window.$docsify.plugins)) {
   window.$docsify.plugins = [];
@@ -28,12 +30,12 @@ window.$docsify.plugins.push(function (hook, vm) {
   hook.beforeEach(function (raw) {
     const reg = /`{3}<([^`]+)>\n([^`]+)`{3}/g;
     return raw.replace(reg, function (_, c, p) {
-      let slot = "";
-      let props = "";
+      let slot = '';
+      let props = '';
       p.split(/\n/).forEach((q) => {
-        const [prop, value] = q.trim().split(":");
+        const [prop, value] = q.trim().split(':');
         if (prop) {
-          if (typeof value === "undefined") {
+          if (typeof value === 'undefined') {
             slot = prop;
           } else {
             props += ` ${prop}="${value}"`;

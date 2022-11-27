@@ -1,0 +1,30 @@
+.badge {
+  border-radius: 2px;
+  overflow: hidden;
+  user-select: none;
+  box-sizing: border-box;
+  margin: 0 2px;
+  vertical-align: text-top;
+}
+
+.badge, .badge-title, .badge-content {
+  display: inline-block;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 600;
+  font-family: system-ui;
+  white-space: pre-wrap;
+  line-height: 1.26rem;
+}
+
+.badge-title, .badge-content {
+  padding: 0 4px;
+}
+
+.badge-title {
+  background-color: #aaa;
+}
+
+.badge-content {
+  background-color: #75a49e;
+}
