@@ -35,7 +35,7 @@ const baseUrl = () => {
   if (isLocal) {
     return "/packages/img/docs/assets/";
   }
-  return "/img/";
+  return "/img/assets/";
 };
 
 const fetchErrCatch = (err) => {

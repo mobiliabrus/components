@@ -7646,7 +7646,7 @@
     if (isLocal) {
       return "/packages/img/docs/assets/";
     }
-    return "/img/";
+    return "/img/assets/";
   };
   var fetchErrCatch = function fetchErrCatch(err) {
     console.error(err);
