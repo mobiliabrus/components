@@ -7856,7 +7856,7 @@
   var css_248z$2 = ".map {\n  min-height: 160px;\n}\n#bingLogo,\n#MicrosoftNav,\n.CopyrightContainer,\n.bm_bottomRightOverlay {\n  display: none !important;\n}\n";
   styleInject(css_248z$2);
 
-  var apiKey =  "AmaJse0LMtAHWktKP2ew2c_NNcKEDFem3a1MWEu8xN0_fNn-alxc7q1BlLEgcQtD" ;
+  var apiKey =  'AmaJse0LMtAHWktKP2ew2c_NNcKEDFem3a1MWEu8xN0_fNn-alxc7q1BlLEgcQtD' ;
   var template$6 = "<div class=\"map\" ref=\"map\"></div>";
   var Map = {
     template: template$6,
@@ -7865,7 +7865,7 @@
         map: undefined
       };
     },
-    props: ["center", "points", "walking", "transit", "driving"],
+    props: ['center', 'points', 'walking', 'transit', 'driving', 'line'],
     mounted: function mounted() {
       var _this = this;
       loadBingApi(apiKey).then(function () {
@@ -7873,6 +7873,7 @@
         _this.$walking();
         _this.$transit();
         _this.$driving();
+        _this.$line();
         _this.$addPoint();
         if (!_this.autoUpdateMapView) {
           _this.$setCenter();
@@ -7881,7 +7882,7 @@
     },
     computed: {
       autoUpdateMapView: function autoUpdateMapView() {
-        return this.points.length === 0 && (this.walking.length > 0 || this.driving.length > 0 || this.transit.length > 0);
+        return this.points.length === 0 && this.line.length === 0 && (this.walking.length > 0 || this.driving.length > 0 || this.transit.length > 0);
       }
     },
     methods: {
@@ -7890,33 +7891,33 @@
           customMapStyle: {
             elements: {
               area: {
-                fillColor: "#b6e591"
+                fillColor: '#b6e591'
               },
               water: {
-                fillColor: "#75cff0"
+                fillColor: '#75cff0'
               },
               tollRoad: {
-                fillColor: "#a964f4",
-                strokeColor: "#a964f4"
+                fillColor: '#a964f4',
+                strokeColor: '#a964f4'
               },
               arterialRoad: {
-                fillColor: "#ffffff",
-                strokeColor: "#d7dae7"
+                fillColor: '#ffffff',
+                strokeColor: '#d7dae7'
               },
               road: {
-                fillColor: "#ffa35a",
-                strokeColor: "#ff9c4f"
+                fillColor: '#ffa35a',
+                strokeColor: '#ff9c4f'
               },
               street: {
-                fillColor: "#ffffff",
-                strokeColor: "#ffffff"
+                fillColor: '#ffffff',
+                strokeColor: '#ffffff'
               },
               transit: {
-                fillColor: "#000000"
+                fillColor: '#000000'
               }
             },
             settings: {
-              landColor: "#efe9e1"
+              landColor: '#efe9e1'
             }
           }
         });
@@ -7944,7 +7945,9 @@
           _this$driving = this.driving,
           driving = _this$driving === void 0 ? [] : _this$driving,
           _this$transit = this.transit,
-          transit = _this$transit === void 0 ? [] : _this$transit;
+          transit = _this$transit === void 0 ? [] : _this$transit,
+          _this$line = this.line,
+          line = _this$line === void 0 ? [] : _this$line;
         var locations = [].concat(_toConsumableArray(points.map(function (_ref) {
           var latitude = _ref.latitude,
             longitude = _ref.longitude;
@@ -7961,6 +7964,10 @@
           var latitude = _ref4.latitude,
             longitude = _ref4.longitude;
           return new Microsoft.Maps.Location(latitude, longitude);
+        })), _toConsumableArray(line.map(function (_ref5) {
+          var latitude = _ref5.latitude,
+            longitude = _ref5.longitude;
+          return new Microsoft.Maps.Location(latitude, longitude);
         })));
         setTimeout(function () {
           _this2.map.setView({
@@ -7975,10 +7982,10 @@
         var _this$points2 = this.points,
           points = _this$points2 === void 0 ? [] : _this$points2;
         if (Array.isArray(points) && points.length) {
-          points.forEach(function (_ref5) {
-            var latitude = _ref5.latitude,
-              longitude = _ref5.longitude,
-              address = _ref5.address;
+          points.forEach(function (_ref6) {
+            var latitude = _ref6.latitude,
+              longitude = _ref6.longitude,
+              address = _ref6.address;
             var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), {
               title: address
             });
@@ -7992,50 +7999,67 @@
         var _this$walking2 = this.walking,
           walking = _this$walking2 === void 0 ? [] : _this$walking2;
         if (Array.isArray(walking) && walking.length) {
-          this.$route(walking, "walking");
+          this.$route(walking, 'walking');
         }
       },
       $transit: function $transit() {
         var _this$transit2 = this.transit,
           transit = _this$transit2 === void 0 ? [] : _this$transit2;
         if (Array.isArray(transit) && transit.length) {
-          this.$route(transit, "transit");
+          this.$route(transit, 'transit');
         }
       },
       $driving: function $driving() {
         var _this$driving2 = this.driving,
           driving = _this$driving2 === void 0 ? [] : _this$driving2;
         if (Array.isArray(driving) && driving.length) {
-          this.$route(driving, "driving");
+          this.$route(driving, 'driving');
+        }
+      },
+      $line: function $line() {
+        var _this$line2 = this.line,
+          line = _this$line2 === void 0 ? [] : _this$line2;
+        if (Array.isArray(line) && line.length) {
+          this.$route(line, 'line');
         }
       },
       $route: function $route(route) {
         var _this4 = this;
-        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "walking";
+        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'walking';
         if (Array.isArray(route) && route.length) {
-          Microsoft.Maps.loadModule("Microsoft.Maps.Directions", function () {
-            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(_this4.map);
-            directionsManager.setRequestOptions({
-              maxRoutes: 1,
-              routeDraggable: false,
-              routeMode: Microsoft.Maps.Directions.RouteMode[type]
+          if (type === 'line') {
+            var coords = route.map(function (l) {
+              return new Microsoft.Maps.Location(l.latitude, l.longitude);
             });
-            route.forEach(function (_ref6) {
-              var address = _ref6.address,
-                latitude = _ref6.latitude,
-                longitude = _ref6.longitude;
-              directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({
-                address: address,
-                isViaPoint: !address,
-                location: new Microsoft.Maps.Location(latitude, longitude)
-              }));
+            var line = new Microsoft.Maps.Polyline(coords, {
+              strokeThickness: 3
             });
-            directionsManager.setRenderOptions({
-              itineraryContainer: document.getElementById("printoutPanel"),
-              autoUpdateMapView: _this4.autoUpdateMapView
+            this.map.entities.push(line);
+          } else {
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+              var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(_this4.map);
+              directionsManager.setRequestOptions({
+                maxRoutes: 1,
+                routeDraggable: false,
+                routeMode: Microsoft.Maps.Directions.RouteMode[type]
+              });
+              route.forEach(function (_ref7) {
+                var address = _ref7.address,
+                  latitude = _ref7.latitude,
+                  longitude = _ref7.longitude;
+                directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({
+                  address: address,
+                  isViaPoint: !address,
+                  location: new Microsoft.Maps.Location(latitude, longitude)
+                }));
+              });
+              directionsManager.setRenderOptions({
+                itineraryContainer: document.getElementById('printoutPanel'),
+                autoUpdateMapView: _this4.autoUpdateMapView
+              });
+              directionsManager.calculateDirections();
             });
-            directionsManager.calculateDirections();
-          });
+          }
         }
       }
     }
@@ -8044,10 +8068,10 @@
   var css_248z$3 = ".map-wrapper {\n  position: relative;\n}\n.map-wrapper .map {\n  width: 100%;\n  height: 100%;\n}\n.map-mask {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 1001;\n}\n.map-fullscreen {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100vh;\n  z-index: 2147483647;\n}\n";
   styleInject(css_248z$3);
 
-  var template$7 = htmlMinify("<div>\n<div v-if=\"fullscreen\" class=\"map-wrapper map-fullscreen\">\n  <div @click=\"this.closeFullScreen\" style=\"position:absolute;right:8px;top:10px;z-index:2147483646\">\n        <v-close></v-close>\n  </div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  ></v-map>\n</div>\n<div class=\"map-wrapper\">\n  <div class=\"map-mask\" @click=\"this.switchFullScreen\"></div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  ></v-map>\n</div>\n</div>");
+  var template$7 = htmlMinify("<div>\n<div v-if=\"fullscreen\" class=\"map-wrapper map-fullscreen\">\n  <div @click=\"this.closeFullScreen\" style=\"position:absolute;right:8px;top:10px;z-index:2147483646\">\n        <v-close></v-close>\n  </div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  :line=\"this._line\"\n  ></v-map>\n</div>\n<div class=\"map-wrapper\">\n  <div class=\"map-mask\" @click=\"this.switchFullScreen\"></div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  :line=\"this._line\"\n  ></v-map>\n</div>\n</div>");
   var map = {
     template: template$7,
-    props: ["center", "points", "walking", "transit", "driving"],
+    props: ['center', 'points', 'walking', 'transit', 'driving', 'line'],
     data: function data() {
       return {
         fullscreen: false
@@ -8055,11 +8079,11 @@
     },
     computed: {
       _class: function _class() {
-        return this.fullscreen ? "map-wrapper map-fullscreen" : "map-wrapper";
+        return this.fullscreen ? 'map-wrapper map-fullscreen' : 'map-wrapper';
       },
       _points: function _points() {
-        return typeof this.points === "string" ? this.points.split(/[;|]/).map(function (point) {
-          var _point$split = point.split(","),
+        return typeof this.points === 'string' ? this.points.split(/[;|]/).map(function (point) {
+          var _point$split = point.split(','),
             _point$split2 = _slicedToArray(_point$split, 3),
             lat = _point$split2[0],
             lng = _point$split2[1],
@@ -8072,7 +8096,7 @@
         }) : [];
       },
       _center: function _center() {
-        var _ref = typeof this.center === "string" ? this.center.split(",") : [],
+        var _ref = typeof this.center === 'string' ? this.center.split(',') : [],
           _ref2 = _slicedToArray(_ref, 2),
           latitude = _ref2[0],
           longitude = _ref2[1];
@@ -8087,8 +8111,8 @@
         };
       },
       _walking: function _walking() {
-        return typeof this.walking === "string" ? this.walking.split(/[;|]/).map(function (point) {
-          var _point$split3 = point.split(","),
+        return typeof this.walking === 'string' ? this.walking.split(/[;|]/).map(function (point) {
+          var _point$split3 = point.split(','),
             _point$split4 = _slicedToArray(_point$split3, 3),
             lat = _point$split4[0],
             lng = _point$split4[1],
@@ -8101,8 +8125,8 @@
         }) : [];
       },
       _transit: function _transit() {
-        return typeof this.transit === "string" ? this.transit.split(/[;|]/).map(function (point) {
-          var _point$split5 = point.split(","),
+        return typeof this.transit === 'string' ? this.transit.split(/[;|]/).map(function (point) {
+          var _point$split5 = point.split(','),
             _point$split6 = _slicedToArray(_point$split5, 3),
             lat = _point$split6[0],
             lng = _point$split6[1],
@@ -8115,8 +8139,8 @@
         }) : [];
       },
       _driving: function _driving() {
-        return typeof this.driving === "string" ? this.driving.split(/[;|]/).map(function (point) {
-          var _point$split7 = point.split(","),
+        return typeof this.driving === 'string' ? this.driving.split(/[;|]/).map(function (point) {
+          var _point$split7 = point.split(','),
             _point$split8 = _slicedToArray(_point$split7, 3),
             lat = _point$split8[0],
             lng = _point$split8[1],
@@ -8125,6 +8149,18 @@
             latitude: lat,
             longitude: lng,
             address: address
+          };
+        }) : [];
+      },
+      _line: function _line() {
+        return typeof this.line === 'string' ? this.line.split(/[;|]/).map(function (point) {
+          var _point$split9 = point.split(','),
+            _point$split10 = _slicedToArray(_point$split9, 2),
+            lat = _point$split10[0],
+            lng = _point$split10[1];
+          return {
+            latitude: lat,
+            longitude: lng
           };
         }) : [];
       }
@@ -8138,8 +8174,8 @@
       }
     },
     components: {
-      "v-map": Map,
-      "v-close": Close
+      'v-map': Map,
+      'v-close': Close
     }
   };
 

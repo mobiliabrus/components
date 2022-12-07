@@ -1,7 +1,7 @@
-import Map from "./Map";
-import Close from "../a-close";
-import { htmlMinify } from "../util";
-import "./index.less";
+import Map from './Map';
+import Close from '../a-close';
+import { htmlMinify } from '../util';
+import './index.less';
 
 const template = htmlMinify(`<div>
 <div v-if="fullscreen" class="map-wrapper map-fullscreen">
@@ -14,6 +14,7 @@ const template = htmlMinify(`<div>
   :walking="this._walking"
   :transit="this._transit"
   :driving="this._driving"
+  :line="this._line"
   ></v-map>
 </div>
 <div class="map-wrapper">
@@ -24,13 +25,14 @@ const template = htmlMinify(`<div>
   :walking="this._walking"
   :transit="this._transit"
   :driving="this._driving"
+  :line="this._line"
   ></v-map>
 </div>
 </div>`);
 
 export default {
   template,
-  props: ["center", "points", "walking", "transit", "driving"],
+  props: ['center', 'points', 'walking', 'transit', 'driving', 'line'],
   data: function () {
     return {
       fullscreen: false,
@@ -38,44 +40,55 @@ export default {
   },
   computed: {
     _class: function () {
-      return this.fullscreen ? "map-wrapper map-fullscreen" : "map-wrapper";
+      return this.fullscreen ? 'map-wrapper map-fullscreen' : 'map-wrapper';
     },
     _points: function () {
-      return typeof this.points === "string"
+      return typeof this.points === 'string'
         ? this.points.split(/[;|]/).map((point) => {
-            const [lat, lng, address] = point.split(",");
+            const [lat, lng, address] = point.split(',');
             return { latitude: lat, longitude: lng, address };
           })
         : [];
     },
     _center: function () {
-      const [latitude, longitude] = typeof this.center === "string" ? this.center.split(",") : [];
+      const [latitude, longitude] = typeof this.center === 'string' ? this.center.split(',') : [];
       return latitude && longitude
         ? { latitude, longitude }
         : // try using points as center
-          this._points[0] && { latitude: this._points[0].latitude, longitude: this.points[0].longitude };
+          this._points[0] && {
+            latitude: this._points[0].latitude,
+            longitude: this.points[0].longitude,
+          };
     },
     _walking: function () {
-      return typeof this.walking === "string"
+      return typeof this.walking === 'string'
         ? this.walking.split(/[;|]/).map((point) => {
-            const [lat, lng, address] = point.split(",");
+            const [lat, lng, address] = point.split(',');
             return { latitude: lat, longitude: lng, address };
           })
         : [];
     },
     _transit: function () {
-      return typeof this.transit === "string"
+      return typeof this.transit === 'string'
         ? this.transit.split(/[;|]/).map((point) => {
-            const [lat, lng, address] = point.split(",");
+            const [lat, lng, address] = point.split(',');
             return { latitude: lat, longitude: lng, address };
           })
         : [];
     },
     _driving: function () {
-      return typeof this.driving === "string"
+      return typeof this.driving === 'string'
         ? this.driving.split(/[;|]/).map((point) => {
-            const [lat, lng, address] = point.split(",");
+            const [lat, lng, address] = point.split(',');
             return { latitude: lat, longitude: lng, address };
+          })
+        : [];
+    },
+    _line: function () {
+      return typeof this.line === 'string'
+        ? this.line.split(/[;|]/).map((point) => {
+            const [lat, lng] = point.split(',');
+            return { latitude: lat, longitude: lng };
           })
         : [];
     },
@@ -89,7 +102,7 @@ export default {
     },
   },
   components: {
-    "v-map": Map,
-    "v-close": Close,
+    'v-map': Map,
+    'v-close': Close,
   },
 };
