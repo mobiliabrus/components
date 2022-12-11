@@ -11,6 +11,7 @@ const template = htmlMinify(`<div>
   <v-map
   :center="this._center"
   :points="this._points"
+  :divesites="this._divesites"
   :walking="this._walking"
   :transit="this._transit"
   :driving="this._driving"
@@ -22,6 +23,7 @@ const template = htmlMinify(`<div>
   <v-map
   :center="this._center"
   :points="this._points"
+  :divesites="this._divesites"
   :walking="this._walking"
   :transit="this._transit"
   :driving="this._driving"
@@ -32,7 +34,7 @@ const template = htmlMinify(`<div>
 
 export default {
   template,
-  props: ['center', 'points', 'walking', 'transit', 'driving', 'line'],
+  props: ['center', 'points', 'walking', 'transit', 'driving', 'line', 'divesites'],
   data: function () {
     return {
       fullscreen: false,
@@ -47,6 +49,14 @@ export default {
         ? this.points.split(/[;|]/).map((point) => {
             const [lat, lng, address] = point.split(',');
             return { latitude: lat, longitude: lng, address };
+          })
+        : [];
+    },
+    _divesites: function () {
+      return typeof this.divesites === 'string'
+        ? this.divesites.split(/[;|]/).map((site) => {
+            const [lat, lng, name] = site.split(',');
+            return { latitude: lat, longitude: lng, name };
           })
         : [];
     },
