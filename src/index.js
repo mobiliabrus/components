@@ -6,6 +6,7 @@ import hotel from './components/a-hotel';
 import carousel from './components/a-carousel';
 import badge from './components/a-badge';
 import tooltip from './components/a-tooltip';
+import gallery from './components/a-gallery';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -20,6 +21,7 @@ window.$docsify.vueComponents = {
   'a-carousel': carousel,
   'a-badge': badge,
   'a-tooltip': tooltip,
+  'a-gallery': gallery,
   ...(window.$docsify.vueComponents || {}),
 };
 
