@@ -7640,13 +7640,13 @@
     }
   };
 
-  var template$3 = htmlMinify("<a-modal :scale=\"scale\">\n<template v-slot:action>\n  <div @click=\"loadHD\" v-if=\"!src\" style=\"display:inline-block;color:#fff;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;border:1px solid #fff;box-shadow:0 2px #00000004;\">HD</div>\n</template>\n<template v-slot:popover>\n  <img :src=\"visible && (src || srcMin)\" alt=\"\" style=\"position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;\" />\n</template>\n<template v-slot:default>\n  <img :src=\"visible && !hide && (src || srcMin)\" alt=\"\" @load=\"onImageLoad\" style=\"width:100%\" />\n  <div v-if=\"(!visible || hide) || (!src && !srcMin)\" style=\"width:100%;height:35vw;background:#ddd;position:relative\">\n    <div style=\"position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translateX(-50%) translateY(-50%);\n    color: #eee;\n    font-size: 1.5rem;\n    font-weight: 600;\n    font-style: italic;\n    background: -webkit-linear-gradient(315deg,#69c0ff 25%,#0050b3);\n    background-clip: text;\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    \">confidential</div>\n  </div>\n</template>\n</a-modal>");
-  var isLocal = location.hostname === "localhost";
+  var template$3 = htmlMinify("<a-modal :scale=\"scale\">\n<template v-slot:action>\n  <div @click=\"loadHD\" v-if=\"!src\" style=\"display:inline-block;color:#fff;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;border:1px solid #fff;box-shadow:0 2px #00000004;\">HD</div>\n</template>\n<template v-slot:popover>\n  <img :src=\"visible && (src || srcMin)\" :alt=\"name\" style=\"position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;\" />\n</template>\n<template v-slot:default>\n  <img :src=\"visible && !hide && (src || srcMin)\" :alt=\"name\" @load=\"onImageLoad\" style=\"width:100%\" />\n  <div v-if=\"(!visible || hide) || (!src && !srcMin)\" style=\"width:100%;height:35vw;background:#ddd;position:relative\">\n    <div style=\"position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translateX(-50%) translateY(-50%);\n    color: #eee;\n    font-size: 1.5rem;\n    font-weight: 600;\n    font-style: italic;\n    background: -webkit-linear-gradient(315deg,#69c0ff 25%,#0050b3);\n    background-clip: text;\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    \">confidential</div>\n  </div>\n</template>\n</a-modal>");
+  var isLocal = location.hostname === 'localhost';
   var baseUrl = function baseUrl() {
     if (isLocal) {
-      return "/packages/img/docs/assets/";
+      return '/packages/img/docs/assets/';
     }
-    return "/img/assets/";
+    return '/img/assets/';
   };
   var fetchErrCatch = function fetchErrCatch(err) {
     console.error(err);
@@ -7660,7 +7660,7 @@
       },
       dir: {
         type: String,
-        default: "public"
+        default: 'public'
       },
       hide: {
         type: Boolean,
@@ -7674,11 +7674,11 @@
         srcMin: undefined,
         scale: undefined,
         secretKey: secretKey,
-        visible: !(this.dir === "assert" && !secretKey)
+        visible: !(this.dir === 'assert' && !secretKey)
       };
     },
     mounted: function mounted() {
-      this.load("min", "srcMin");
+      this.load('min', 'srcMin');
     },
     methods: {
       onImageLoad: function onImageLoad(e) {
@@ -7686,47 +7686,47 @@
         this.scale = window.innerHeight / img.offsetHeight;
       },
       loadHD: function loadHD() {
-        this.load("", "src");
+        this.load('', 'src');
       },
       load: function load() {
         var _this = this;
-        var suffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "src";
-        if (this.dir === "privacy") {
+        var suffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'src';
+        if (this.dir === 'privacy') {
           if (this.secretKey) {
-            var name = suffer ? [this.name.split(".")[0], suffer, "webp"].join(".") : this.name;
-            fetch(baseUrl() + "privacy/" + name, {
-              mode: "cors"
+            var name = suffer ? [this.name.split('.')[0], suffer, 'webp'].join('.') : this.name;
+            fetch(baseUrl() + 'privacy/' + name, {
+              mode: 'cors'
             }).then(function (res) {
               return res.text();
             }).then(function (content) {
-              _this[t] = crypto(content, _this.secretKey, "decrypt");
+              _this[t] = crypto(content, _this.secretKey, 'decrypt');
             }).catch(fetchErrCatch);
           }
-        } else if (this.dir === "privacy-gif") {
+        } else if (this.dir === 'privacy-gif') {
           if (this.secretKey) {
-            var _name = suffer ? [this.name.split(".")[0], suffer ? suffer + ".g1f" : "gif"].join(".") : this.name;
-            fetch(baseUrl() + "privacy/" + _name, {
-              mode: "cors"
+            var _name = suffer ? [this.name.split('.')[0], suffer ? suffer + '.g1f' : 'gif'].join('.') : this.name;
+            fetch(baseUrl() + 'privacy/' + _name, {
+              mode: 'cors'
             }).then(function (res) {
               return res.text();
             }).then(function (content) {
-              _this[t] = crypto(content, _this.secretKey, "decrypt");
+              _this[t] = crypto(content, _this.secretKey, 'decrypt');
             }).catch(fetchErrCatch);
           }
-        } else if (this.dir === "animation") {
-          this[t] = baseUrl() + "animation/" + [this.name, suffer, "gif"].filter(function (_) {
+        } else if (this.dir === 'animation') {
+          this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter(function (_) {
             return _;
-          }).join(".");
+          }).join('.');
         } else {
-          this[t] = baseUrl() + "public/" + [this.name, suffer, "webp"].filter(function (_) {
+          this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter(function (_) {
             return _;
-          }).join(".");
+          }).join('.');
         }
       }
     },
     components: {
-      "a-modal": modal
+      'a-modal': modal
     }
   };
 
