@@ -7730,7 +7730,7 @@
     }
   };
 
-  var template$4 = htmlMinify("\n<template v-if=\"!visible\">\n<span v-if=\"this.blackout || this.content\" @click=\"decrypt\" style=\"display: inline;\nbackground-color: #333;\ncolor: transparent;\npadding: 0 8px;\nuser-select: none;\nheight: 18px;\nline-height: 18px;\nword-break: break-all;\nletter-spacing: -5.5px;\">{{ this.rawContent }}</span>\n</template>\n<template v-else>\n<span v-html=\"this.content\"></span>\n</template>\n");
+  var template$4 = htmlMinify("\n<template v-if=\"!visible\">\n<span v-if=\"this.blackout || this.content\" @click=\"decrypt\" style=\"display: inline;\nbackground-color: #333;\ncolor: transparent;\npadding: 0 8px;\nuser-select: none;\nheight: 18px;\nline-height: 18px;\nword-break: break-all;\nletter-spacing: -5.5px;\">{{ this.rawContent }}</span>\n</template>\n<template v-else>\n<span ref=\"t\"></span>\n</template>\n");
   var secret = {
     template: template$4,
     props: {
@@ -7779,15 +7779,23 @@
           var content = cryptoJs.enc.Utf8.stringify(raw);
           _this.content = marked.parse(content);
           if (_this.autoload) {
-            _this.visible = true;
+            _this.decrypt();
           }
         }
       });
     },
     methods: {
       decrypt: function decrypt() {
+        var _this2 = this;
         if (this.secretKey) {
+          var app = window.Vue.createApp({
+            template: this.content,
+            components: window.$docsify.vueComponents
+          });
           this.visible = true;
+          setTimeout(function () {
+            app.mount(_this2.$refs.t);
+          }, 0);
         }
       }
     }

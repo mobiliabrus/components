@@ -14,7 +14,7 @@ word-break: break-all;
 letter-spacing: -5.5px;">{{ this.rawContent }}</span>
 </template>
 <template v-else>
-<span v-html="this.content"></span>
+<span ref="t"></span>
 </template>
 `);
 
@@ -32,7 +32,7 @@ export default {
     blackout: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   data: function () {
     return {
@@ -67,7 +67,7 @@ export default {
           const content = CryptoJS.enc.Utf8.stringify(raw);
           this.content = marked.parse(content);
           if (this.autoload) {
-            this.visible = true;
+            this.decrypt();
           }
         }
       });
@@ -75,7 +75,14 @@ export default {
   methods: {
     decrypt: function () {
       if (this.secretKey) {
+        const app = window.Vue.createApp({
+          template: this.content,
+          components: window.$docsify.vueComponents,
+        });
         this.visible = true;
+        setTimeout(() => {
+          app.mount(this.$refs.t);
+        }, 0);
       }
     },
   },
