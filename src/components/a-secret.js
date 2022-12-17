@@ -1,7 +1,9 @@
 import CryptoJS from 'crypto-js';
 import { htmlMinify } from './util';
 
-const template = htmlMinify(`<span v-if="!visible && this.rawContent && this.blackout" @click="decrypt" style="display: inline;
+const template = htmlMinify(`
+<template v-if="!visible">
+<span v-if="this.blackout || this.content" @click="decrypt" style="display: inline;
 background-color: #333;
 color: transparent;
 padding: 0 8px;
@@ -10,7 +12,11 @@ height: 18px;
 line-height: 18px;
 word-break: break-all;
 letter-spacing: -5.5px;">{{ this.rawContent }}</span>
-<span v-else-if="visible" v-html="this.content"></span>`);
+</template>
+<template v-else>
+<span v-html="this.content"></span>
+</template>
+`);
 
 export default {
   template,

@@ -7730,7 +7730,7 @@
     }
   };
 
-  var template$4 = htmlMinify("<span v-if=\"!visible && this.rawContent && this.blackout\" @click=\"decrypt\" style=\"display: inline;\nbackground-color: #333;\ncolor: transparent;\npadding: 0 8px;\nuser-select: none;\nheight: 18px;\nline-height: 18px;\nword-break: break-all;\nletter-spacing: -5.5px;\">{{ this.rawContent }}</span>\n<span v-else-if=\"visible\" v-html=\"this.content\"></span>");
+  var template$4 = htmlMinify("\n<template v-if=\"!visible\">\n<span v-if=\"this.blackout || this.content\" @click=\"decrypt\" style=\"display: inline;\nbackground-color: #333;\ncolor: transparent;\npadding: 0 8px;\nuser-select: none;\nheight: 18px;\nline-height: 18px;\nword-break: break-all;\nletter-spacing: -5.5px;\">{{ this.rawContent }}</span>\n</template>\n<template v-else>\n<span v-html=\"this.content\"></span>\n</template>\n");
   var secret = {
     template: template$4,
     props: {
