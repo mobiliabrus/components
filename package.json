@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "father-build --watch &",
-    "build": "father-build"
+    "build": "father-build --watch"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.13.5",

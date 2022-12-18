@@ -8300,10 +8300,15 @@
   var css_248z$6 = ".gallery {\n  display: flex;\n}\n.gallery .gallery-item {\n  display: inline-block;\n}\n";
   styleInject(css_248z$6);
 
-  var template$a = htmlMinify("\n<div class=\"gallery\" v-if=\"img\">\n<div class=\"gallery-item\" v-for=\"i in img\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</div>\n");
+  var template$a = htmlMinify("\n<div class=\"gallery\" v-if=\"img\">\n<div class=\"gallery-item\" v-for=\"i in img\" :style=\"{width}\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</div>\n");
   var gallery = {
     template: template$a,
     props: ['img'],
+    computed: {
+      width: function width() {
+        return "".concat(100 / this.img.length, "%");
+      }
+    },
     components: {
       'a-img': img
     }
