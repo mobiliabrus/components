@@ -7640,7 +7640,7 @@
     }
   };
 
-  var template$3 = htmlMinify("<a-modal :scale=\"scale\">\n<template v-slot:action>\n  <div @click=\"loadHD\" v-if=\"!src\" style=\"display:inline-block;color:#fff;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;border:1px solid #fff;box-shadow:0 2px #00000004;\">HD</div>\n</template>\n<template v-slot:popover>\n  <img :src=\"visible && (src || srcMin)\" :alt=\"name\" style=\"position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;\" />\n</template>\n<template v-slot:default>\n  <img :src=\"visible && !hide && (src || srcMin)\" :alt=\"name\" @load=\"onImageLoad\" style=\"width:100%\" />\n  <div v-if=\"(!visible || hide) || (!src && !srcMin)\" style=\"width:100%;height:35vw;background:#ddd;position:relative\">\n    <div style=\"position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translateX(-50%) translateY(-50%);\n    color: #eee;\n    font-size: 1.5rem;\n    font-weight: 600;\n    font-style: italic;\n    background: -webkit-linear-gradient(315deg,#69c0ff 25%,#0050b3);\n    background-clip: text;\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    \">confidential</div>\n  </div>\n</template>\n</a-modal>");
+  var template$3 = htmlMinify("<a-modal :scale=\"scale\">\n<template v-slot:action>\n  <div @click=\"loadHD\" v-if=\"!src\" style=\"display:inline-block;color:#fff;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;border:1px solid #fff;box-shadow:0 2px #00000004;\">HD</div>\n</template>\n<template v-slot:popover>\n  <img :src=\"visible && (src || srcMin)\" :alt=\"name\" style=\"position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;\" />\n</template>\n<template v-slot:default>\n  <img v-if=\"src || srcMin\" :src=\"visible && !hide && (src || srcMin)\" :alt=\"name\" @load=\"onImageLoad\" style=\"width:100%\" />\n</template>\n</a-modal>");
   var isLocal = location.hostname === 'localhost';
   var baseUrl = function baseUrl() {
     if (isLocal) {
@@ -8351,4 +8351,3 @@
   });
 
 })));
-//# sourceMappingURL=components.umd.js.map

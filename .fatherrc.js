@@ -1,7 +1,4 @@
 export default {
-  file: "components",
-  umd: {
-    minFile: true,
-    sourcemap: true,
-  },
+  file: 'components',
+  umd: true,
 };

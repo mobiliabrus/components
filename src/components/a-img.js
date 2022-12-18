@@ -10,22 +10,7 @@ const template = htmlMinify(`<a-modal :scale="scale">
   <img :src="visible && (src || srcMin)" :alt="name" style="position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;" />
 </template>
 <template v-slot:default>
-  <img :src="visible && !hide && (src || srcMin)" :alt="name" @load="onImageLoad" style="width:100%" />
-  <div v-if="(!visible || hide) || (!src && !srcMin)" style="width:100%;height:35vw;background:#ddd;position:relative">
-    <div style="position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    color: #eee;
-    font-size: 1.5rem;
-    font-weight: 600;
-    font-style: italic;
-    background: -webkit-linear-gradient(315deg,#69c0ff 25%,#0050b3);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    ">confidential</div>
-  </div>
+  <img v-if="src || srcMin" :src="visible && !hide && (src || srcMin)" :alt="name" @load="onImageLoad" style="width:100%" />
 </template>
 </a-modal>`);
 

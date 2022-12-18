@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "father-build --watch &",
     "build": "father-build"
   },
   "devDependencies": {
