@@ -7749,11 +7749,18 @@
     },
     data: function data() {
       return {
+        app: undefined,
         visible: false,
         rawContent: undefined,
         content: undefined,
         secretKey: localStorage.getItem("lee6's-secret")
       };
+    },
+    beforeUnmount: function beforeUnmount() {
+      if (this.app) {
+        this.app.unmount();
+        this.app = null;
+      }
     },
     mounted: function mounted() {
       var _this = this;
@@ -7793,6 +7800,7 @@
             components: window.$docsify.vueComponents
           });
           this.visible = true;
+          this.app = app;
           setTimeout(function () {
             app.mount(_this2.$refs.t);
           }, 0);

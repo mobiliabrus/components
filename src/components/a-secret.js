@@ -36,11 +36,18 @@ export default {
   },
   data: function () {
     return {
+      app: undefined,
       visible: false,
       rawContent: undefined,
       content: undefined,
       secretKey: localStorage.getItem("lee6's-secret"),
     };
+  },
+  beforeUnmount() {
+    if (this.app) {
+      this.app.unmount();
+      this.app = null;
+    }
   },
   mounted() {
     fetch(`assets/confidential/${this.name}.md`, { mode: 'cors' })
@@ -80,6 +87,7 @@ export default {
           components: window.$docsify.vueComponents,
         });
         this.visible = true;
+        this.app = app;
         setTimeout(() => {
           app.mount(this.$refs.t);
         }, 0);
