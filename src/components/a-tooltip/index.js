@@ -1,10 +1,13 @@
-import "./index.css";
+import { Tooltip } from "../antd";
 
 export default {
-  template: '<span class="tooltip"><span class="tooltip-inner">{{title}}</span><slot></slot></span>',
+  template: '<span style="border-bottom:1px dotted red;display:inline-block"><t-tooltip :title="title"><slot></slot></t-tooltip></span>',
   props: {
     title: {
       type: String,
     },
   },
+  components: {
+    't-tooltip': Tooltip,
+  }
 };

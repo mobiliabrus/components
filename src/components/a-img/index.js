@@ -1,13 +1,17 @@
-import crypto from './crypto.js';
-import modal from './a-modal';
-import { htmlMinify } from './util';
+import crypto from '../crypto.js';
+import modal from '../a-modal';
+import { Button } from 'antd';
+import { htmlMinify } from '../util';
+import './index.less';
 
 const template = htmlMinify(`<a-modal :scale="scale">
 <template v-slot:action>
-  <div @click="loadHD" v-if="!src" style="display:inline-block;color:#fff;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;border:1px solid #fff;box-shadow:0 2px #00000004;">HD</div>
+  <div>
+    <t-button ghost v-if="!src" @click="loadHD" :loading="loading">HD</t-button>
+  </div>
 </template>
 <template v-slot:popover>
-  <img :src="visible && (src || srcMin)" :alt="name" style="position:absolute;top:0;bottom:0;right:0;left:0;margin:auto;" />
+  <img class="a-img-popover-item" :src="visible && (src || srcMin)" :alt="name" />
 </template>
 <template v-slot:default>
   <img v-if="src || srcMin" :src="visible && !hide && (src || srcMin)" :alt="name" @load="onImageLoad" style="width:100%" />
@@ -50,6 +54,7 @@ export default {
       srcMin: undefined,
       scale: undefined,
       secretKey,
+      loading: false,
       visible: !(this.dir === 'assert' && !secretKey),
     };
   },
@@ -68,24 +73,32 @@ export default {
       if (this.dir === 'privacy') {
         if (this.secretKey) {
           const name = suffer ? [this.name.split('.')[0], suffer, 'webp'].join('.') : this.name;
+          this.loading = true;
           fetch(baseUrl() + 'privacy/' + name, { mode: 'cors' })
             .then((res) => res.text())
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
-            .catch(fetchErrCatch);
+            .catch(fetchErrCatch)
+            .finally(() => {
+              this.loading = false;
+            });
         }
       } else if (this.dir === 'privacy-gif') {
         if (this.secretKey) {
           const name = suffer
             ? [this.name.split('.')[0], suffer ? suffer + '.g1f' : 'gif'].join('.')
             : this.name;
+          this.loading = true;
           fetch(baseUrl() + 'privacy/' + name, { mode: 'cors' })
             .then((res) => res.text())
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
-            .catch(fetchErrCatch);
+            .catch(fetchErrCatch)
+            .finally(() => {
+              this.loading = false;
+            });
         }
       } else if (this.dir === 'animation') {
         this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
@@ -96,5 +109,6 @@ export default {
   },
   components: {
     'a-modal': modal,
+    't-button': Button,
   },
 };
