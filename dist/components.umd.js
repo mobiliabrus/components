@@ -8,6 +8,33 @@
 
   var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
 
+  function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+      var _s,
+        _e,
+        _x,
+        _r,
+        _arr = [],
+        _n = !0,
+        _d = !1;
+      try {
+        if (_x = (_i = _i.call(arr)).next, 0 === i) {
+          if (Object(_i) !== _i) return;
+          _n = !1;
+        } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+      } catch (err) {
+        _d = !0, _e = err;
+      } finally {
+        try {
+          if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+      return _arr;
+    }
+  }
   function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
@@ -39,6 +66,7 @@
     }, _typeof(obj);
   }
   function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -65,30 +93,6 @@
   }
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-  }
-  function _iterableToArrayLimit(arr, i) {
-    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _s, _e;
-    try {
-      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"] != null) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
   }
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
@@ -159,6 +163,20 @@
         }
       }
     };
+  }
+  function _toPrimitive(input, hint) {
+    if (typeof input !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+      var res = prim.call(input, hint || "default");
+      if (typeof res !== "object") return res;
+      throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+  }
+  function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return typeof key === "symbol" ? key : String(key);
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -6788,7 +6806,7 @@
   }));
   });
 
-  var cryptoJs = createCommonjsModule(function (module, exports) {
+  var _cryptoJs_4_1_1_cryptoJs = createCommonjsModule(function (module, exports) {
   (function (root, factory, undef) {
   	{
   		// CommonJS
@@ -6808,17 +6826,17 @@
     var key16 = keyorigin.length < 16 ? [].concat(_toConsumableArray(keyorigin), _toConsumableArray(Array.from(new Array(keylength - keyorigin.length)).map(function () {
       return "0";
     }))).join("") : key16;
-    var keyutf = cryptoJs.enc.Utf8.parse(key16);
+    var keyutf = _cryptoJs_4_1_1_cryptoJs.enc.Utf8.parse(key16);
     var iv = {
-      iv: cryptoJs.enc.Base64.parse(key16)
+      iv: _cryptoJs_4_1_1_cryptoJs.enc.Base64.parse(key16)
     };
     if (action === "decrypt") {
-      var raw = cryptoJs.AES.decrypt({
-        ciphertext: cryptoJs.enc.Base64.parse(content)
+      var raw = _cryptoJs_4_1_1_cryptoJs.AES.decrypt({
+        ciphertext: _cryptoJs_4_1_1_cryptoJs.enc.Base64.parse(content)
       }, keyutf, iv);
-      return cryptoJs.enc.Utf8.stringify(raw);
+      return _cryptoJs_4_1_1_cryptoJs.enc.Utf8.stringify(raw);
     } else {
-      return cryptoJs.AES.encrypt(content, keyutf, iv).toString();
+      return _cryptoJs_4_1_1_cryptoJs.AES.encrypt(content, keyutf, iv).toString();
     }
   }
 
@@ -7815,14 +7833,14 @@
           var key16 = keyorigin.length < 16 ? [].concat(_toConsumableArray(keyorigin), _toConsumableArray(Array.from(new Array(keylength - keyorigin.length)).map(function () {
             return '0';
           }))).join('') : key16;
-          var keyutf = cryptoJs.enc.Utf8.parse(key16);
+          var keyutf = _cryptoJs_4_1_1_cryptoJs.enc.Utf8.parse(key16);
           var iv = {
-            iv: cryptoJs.enc.Base64.parse(key16)
+            iv: _cryptoJs_4_1_1_cryptoJs.enc.Base64.parse(key16)
           };
-          var raw = cryptoJs.AES.decrypt({
-            ciphertext: cryptoJs.enc.Base64.parse(rawContent)
+          var raw = _cryptoJs_4_1_1_cryptoJs.AES.decrypt({
+            ciphertext: _cryptoJs_4_1_1_cryptoJs.enc.Base64.parse(rawContent)
           }, keyutf, iv);
-          var content = cryptoJs.enc.Utf8.stringify(raw);
+          var content = _cryptoJs_4_1_1_cryptoJs.enc.Utf8.stringify(raw);
           _this.content = marked.parse(content);
           if (_this.autoload) {
             _this.decrypt();
@@ -7990,10 +8008,10 @@
         });
       },
       $setCenter: function $setCenter() {
-        var _this$center = this.center;
-        _this$center = _this$center === void 0 ? {} : _this$center;
-        var latitude = _this$center.latitude,
-          longitude = _this$center.longitude,
+        var _this$center = this.center,
+          _this$center2 = _this$center === void 0 ? {} : _this$center,
+          latitude = _this$center2.latitude,
+          longitude = _this$center2.longitude,
           zoom = this.zoom;
         if (latitude && longitude) {
           this.map.setView({
