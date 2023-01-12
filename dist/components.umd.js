@@ -7623,7 +7623,7 @@
     template: template$1
   };
 
-  var css_248z$1 = ".a-modal-wrapper {\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100vh;\n  width: 100vw;\n  background: rgba(0, 0, 0, 0.8);\n  z-index: 2147483647;\n}\n.a-modal-close {\n  position: absolute;\n  right: 8px;\n  top: 10px;\n  z-index: 2147483646;\n}\n.a-modal-actions {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  padding: 8px 10px;\n  z-index: 2147483646;\n}\n";
+  var css_248z$1 = ".a-modal-wrapper {\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100vh;\n  width: 100vw;\n  background: rgba(0, 0, 0, 0.8);\n  z-index: 2147483647;\n  overflow: hidden;\n}\n.a-modal-close {\n  position: absolute;\n  right: 8px;\n  top: 10px;\n  z-index: 2147483646;\n}\n.a-modal-actions {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  padding: 8px 10px;\n  z-index: 2147483646;\n}\n";
   styleInject(css_248z$1);
 
   var template$2 = htmlMinify("<div style=\"line-height:initial\">\n  <div v-if=\"visible\" class=\"a-modal-wrapper\">\n    <div class=\"a-modal-close\" @click=\"this.close\">\n      <v-close></v-close>\n    </div>\n    <div class=\"a-modal-actions\">\n      <slot name=\"action\"></slot>\n    </div>\n    <v-zoomer ref=\"zoomer\" style=\"width:100%;height:100%;\">\n      <slot name=\"popover\"></slot>\n    </v-zoomer>\n  </div>\n  <div @click=\"this.pop\">\n    <slot name=\"default\"></slot>\n  </div>\n</div>");
