@@ -69,7 +69,7 @@ export default {
       }
     },
     $setFitView: function () {
-      const { points = [], walking = [], driving = [], transit = [], line = [] } = this;
+      const { points = [], walking = [], driving = [], transit = [], line = [], divesites = [] } = this;
       const locations = [
         ...points.map(
           ({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)
@@ -84,6 +84,7 @@ export default {
           ({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)
         ),
         ...line.map(({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)),
+        ...divesites.map(({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)),
       ];
       setTimeout(() => {
         this.map.setView({
