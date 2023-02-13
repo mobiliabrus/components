@@ -8373,7 +8373,7 @@
     }
   };
 
-  var css_248z$7 = ".gallery {\n  display: flex;\n}\n.gallery .gallery-item {\n  display: inline-block;\n  padding-right: 8px;\n}\n.gallery .gallery-item:nth-last-col {\n  padding-right: 0;\n}\n";
+  var css_248z$7 = ".gallery {\n  display: flex;\n}\n.gallery .gallery-item {\n  display: inline-block;\n  padding-left: 8px;\n}\n.gallery .gallery-item:nth-child(1) {\n  padding-left: 0;\n}\n";
   styleInject(css_248z$7);
 
   var template$a = htmlMinify("\n<div class=\"gallery\" v-if=\"img\">\n<div class=\"gallery-item\" v-for=\"i in img\" :style=\"{width}\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</div>\n");
