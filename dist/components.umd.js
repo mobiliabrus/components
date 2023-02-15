@@ -8390,6 +8390,30 @@
     }
   };
 
+  var css_248z$8 = ".a-word-item {\n  display: inline-block;\n  padding: 0 2px 0 0;\n}\n";
+  styleInject(css_248z$8);
+
+  var template$b = htmlMinify("<div>\n  <span class=\"a-word-item\" v-for=\"s in w\" :style=\"{background: s === fix ? '#d9d9d9' : 'none'}\">{{ s }}</span>\n  <span>{{ title }}</span>\n</div>");
+  var word = {
+    template: template$b,
+    props: {
+      word: {
+        type: String
+      },
+      title: {
+        type: String
+      },
+      fix: {
+        type: String
+      }
+    },
+    computed: {
+      w: function w() {
+        return typeof this.word === 'string' ? this.word.split('.') : [];
+      }
+    }
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -8402,7 +8426,8 @@
     'a-carousel': carousel,
     'a-badge': badge,
     'a-tooltip': tooltip,
-    'a-gallery': gallery
+    'a-gallery': gallery,
+    'a-word': word
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];

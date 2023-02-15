@@ -7,6 +7,7 @@ import carousel from './components/a-carousel';
 import badge from './components/a-badge';
 import tooltip from './components/a-tooltip';
 import gallery from './components/a-gallery';
+import word from './components/a-word';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -22,6 +23,7 @@ window.$docsify.vueComponents = {
   'a-badge': badge,
   'a-tooltip': tooltip,
   'a-gallery': gallery,
+  'a-word': word,
   ...(window.$docsify.vueComponents || {}),
 };
 
