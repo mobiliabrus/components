@@ -8329,7 +8329,9 @@
     }
   };
 
+  var Alert = window.antd && window.antd.Alert;
   var Button = window.antd && window.antd.Button;
+  var Calendar = window.antd && window.antd.Calendar;
   var Carousel = window.antd && window.antd.Carousel;
   var Steps = window.antd && window.antd.Steps;
   var Step = window.antd && window.antd.Step;
@@ -8414,6 +8416,32 @@
     }
   };
 
+  var template$c = htmlMinify("<div>\n  \u8DDD\u79BB{{name}}\u8FD8\u6709{{days}}\u5929\n</div>");
+  var countdown = {
+    template: template$c,
+    props: ['date', 'name'],
+    computed: {
+      days: function days() {
+        return Math.floor((new Date(this.date) - new Date()) / 86400000);
+      }
+    }
+  };
+
+  var template$d = "<div v-if=\"visible\"><a-alert :message=\"'\u6CE8\u610F\uFF1A' + message\" type=\"warning\"></a-alert></div>";
+  var remind = {
+    template: template$d,
+    props: ['start', 'end', 'message'],
+    computed: {
+      visible: function visible() {
+        var now = new Date();
+        return now >= new Date(this.start) && now <= new Date(this.end);
+      }
+    },
+    components: {
+      "a-alert": Alert
+    }
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -8427,7 +8455,9 @@
     'a-badge': badge,
     'a-tooltip': tooltip,
     'a-gallery': gallery,
-    'a-word': word
+    'a-word': word,
+    'a-countdown': countdown,
+    'a-remind': remind
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
