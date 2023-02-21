@@ -8416,13 +8416,29 @@
     }
   };
 
-  var template$c = htmlMinify("<div>\n  \u8DDD\u79BB{{name}}\u8FD8\u6709{{days}}\u5929\n</div>");
+  var oneDay = 86400000;
+  var template$c = htmlMinify("<div>\n  \u8DDD\u79BB{{name}}\u8FD8\u6709{{days}}\n</div>");
   var countdown = {
     template: template$c,
-    props: ['date', 'name'],
+    props: {
+      date: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      type: {
+        type: String
+      }
+    },
     computed: {
       days: function days() {
-        return Math.floor((new Date(this.date) - new Date()) / 86400000);
+        if (this.type === 'week') {
+          return Math.ceil((new Date(this.date) - new Date()) / 86400000 / 7) + '周';
+        }
+        return Math.floor((new Date(this.date) - new Date()) / oneDay) + '天';
       }
     }
   };
