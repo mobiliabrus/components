@@ -1,10 +1,7 @@
 import { htmlMinify } from '../util';
 import './index.less';
 
-const template = htmlMinify(`<div>
-  <span class="a-word-item" v-for="s in w" :style="{background: s === fix ? '#d9d9d9' : 'none'}">{{ s }}</span>
-  <span>{{ title }}</span>
-</div>`);
+const template = htmlMinify(`<a-diction :auto-load="true" :show-origin="false" :word="word">{{ title }}</a-diction>`);
 
 export default {
   template,
@@ -15,13 +12,8 @@ export default {
     title: {
       type: String,
     },
-    fix: {
-      type: String,
-    }
   },
-  computed: {
-    w: function() {
-      return typeof this.word === 'string' ? this.word.split('.') : [];
-    }
-  }
+  components: {
+    'a-diction': window.vueDiction,
+  },
 };

@@ -8392,10 +8392,10 @@
     }
   };
 
-  var css_248z$8 = ".a-word-item {\n  display: inline-block;\n  padding: 0 2px 0 0;\n}\n";
+  var css_248z$8 = ".vue-diction-wrapper {\n  padding: 10px 0;\n  border-bottom: 1px solid #eee;\n}\n.vue-diction-part-of-speech {\n  padding-left: 6px;\n}\n.vue-diction-word,\n.vue-diction-meaning {\n  display: inline-block;\n}\n.vue-diction-meanings {\n  display: inline;\n}\n.vue-diction-meaning .vue-diction-definition {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-definition .vue-diction-example {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-part-of-speech + .vue-diction-definition {\n  display: inline;\n}\n";
   styleInject(css_248z$8);
 
-  var template$b = htmlMinify("<div>\n  <span class=\"a-word-item\" v-for=\"s in w\" :style=\"{background: s === fix ? '#d9d9d9' : 'none'}\">{{ s }}</span>\n  <span>{{ title }}</span>\n</div>");
+  var template$b = htmlMinify("<a-diction :auto-load=\"true\" :show-origin=\"false\" :word=\"word\">{{ title }}</a-diction>");
   var word = {
     template: template$b,
     props: {
@@ -8404,15 +8404,10 @@
       },
       title: {
         type: String
-      },
-      fix: {
-        type: String
       }
     },
-    computed: {
-      w: function w() {
-        return typeof this.word === 'string' ? this.word.split('.') : [];
-      }
+    components: {
+      'a-diction': window.vueDiction
     }
   };
 

@@ -1,4 +1,29 @@
-.a-word-item {
+.vue-diction-wrapper {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.vue-diction-part-of-speech {
+  padding-left: 6px;
+}
+
+.vue-diction-word,
+.vue-diction-meaning {
   display: inline-block;
-  padding: 0 2px 0 0;
+}
+
+.vue-diction-meanings {
+  display: inline;
+}
+
+.vue-diction-meaning {
+  .vue-diction-definition {
+    display: none;
+    .vue-diction-example {
+      display: none;
+    }
+  }
+  .vue-diction-part-of-speech + .vue-diction-definition {
+    display: inline;
+  }
 }
