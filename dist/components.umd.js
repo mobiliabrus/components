@@ -8445,11 +8445,11 @@
     computed: {
       visible: function visible() {
         var now = new Date();
-        return now >= new Date(this.start) && now <= new Date(this.end);
+        return now >= new Date("".concat(this.start, " 00:00:00")) && now <= new Date("".concat(this.end, " 23:59:59"));
       }
     },
     components: {
-      "a-alert": Alert
+      'a-alert': Alert
     }
   };
 
