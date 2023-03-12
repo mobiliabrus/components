@@ -8336,6 +8336,7 @@
   var Steps = window.antd && window.antd.Steps;
   var Step = window.antd && window.antd.Step;
   var Tooltip = window.antd && window.antd.Tooltip;
+  var TypographyParagraph = window.antd && window.antd.TypographyParagraph;
 
   var template$9 = htmlMinify("<a-carousel autoplay>\n<div v-if=\"img\" v-for=\"i in img\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</a-carousel>");
   var carousel = {
@@ -8452,6 +8453,45 @@
       'a-alert': Alert
     }
   };
+
+  console.log(TypographyParagraph);
+  var createApp = window.Vue.createApp;
+  var wrapper = document.createElement('div');
+  wrapper.style.position = 'fixed';
+  wrapper.style.top = '0';
+  wrapper.style.left = '0';
+  document.body.appendChild(wrapper);
+  createApp({
+    template: htmlMinify("<div v-if=\"text\" :style=\"{ position: 'absolute', left: x + 'px', top: y + 'px', background: '#fff' }\">\n  <a-typography-paragraph :copyable=\"{ text }\" style=\"display: flex; margin: 0;\">\n    {{ text }}\n  </a-typography-paragraph>\n</div>"),
+    data: function data() {
+      return {
+        text: '',
+        x: 0,
+        y: 0
+      };
+    },
+    mounted: function mounted() {
+      document.addEventListener('selectionchange', this.listener);
+    },
+    unmount: function unmount() {
+      document.removeEventListener('selectionchange', this.listener);
+    },
+    methods: {
+      listener: function listener() {
+        this.text = document.getSelection().toString();
+        var _document$getSelectio = document.getSelection().getRangeAt(0).getClientRects(),
+          _document$getSelectio2 = _slicedToArray(_document$getSelectio, 1),
+          _document$getSelectio3 = _document$getSelectio2[0],
+          x = _document$getSelectio3.x,
+          y = _document$getSelectio3.y;
+        this.x = Math.floor(x);
+        this.y = Math.floor(y);
+      }
+    },
+    components: {
+      'a-typography-paragraph': TypographyParagraph
+    }
+  }).mount(wrapper);
 
   if (!window.$docsify) {
     window.$docsify = {};

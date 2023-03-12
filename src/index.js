@@ -10,6 +10,7 @@ import gallery from './components/a-gallery';
 import word from './components/a-word';
 import countdown from './components/a-countdown';
 import remind from './components/a-remind';
+import './select';
 
 if (!window.$docsify) {
   window.$docsify = {};
