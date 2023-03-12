@@ -1,8 +1,6 @@
 import { htmlMinify } from './components/util';
 import { TypographyParagraph } from './components/antd';
 
-console.log(TypographyParagraph);
-
 const { createApp } = window.Vue;
 
 const wrapper = document.createElement('div');
@@ -12,16 +10,16 @@ wrapper.style.left = '0';
 document.body.appendChild(wrapper);
 
 createApp({
-  template: htmlMinify(`<div v-if="text" :style="{ position: 'absolute', left: x + 'px', top: y + 'px', background: '#fff' }">
-  <a-typography-paragraph :copyable="{ text }" style="display: flex; margin: 0;">
-    {{ text }}
-  </a-typography-paragraph>
+  template: htmlMinify(`<div v-if="text" :style="{ position: 'absolute', left: x + 'px', top: y + 'px', width: width + 'px', height: height + 'px', background: '#fff' }">
+  <a-typography-paragraph :copyable="{ text }" style="margin: 0; text-align: center;"></a-typography-paragraph>
 </div>`),
   data() {
     return {
       text: '',
       x: 0,
       y: 0,
+      width: 0,
+      height: 0,
     };
   },
   mounted() {
@@ -33,9 +31,12 @@ createApp({
   methods: {
     listener() {
       this.text = document.getSelection().toString();
-      const [{ x, y }] = document.getSelection().getRangeAt(0).getClientRects();
-      this.x = Math.floor(x);
-      this.y = Math.floor(y);
+      console.log(document.getSelection().getRangeAt(0).getClientRects());
+      const [{ x, y, width, height }] = document.getSelection().getRangeAt(0).getClientRects();
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
     },
   },
   components: {
