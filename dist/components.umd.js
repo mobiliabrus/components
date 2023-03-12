@@ -8454,50 +8454,70 @@
     }
   };
 
-  var createApp = window.Vue.createApp;
-  var wrapper = document.createElement('div');
-  wrapper.style.position = 'fixed';
-  wrapper.style.top = '0';
-  wrapper.style.left = '0';
-  document.body.appendChild(wrapper);
-  createApp({
-    template: htmlMinify("<div v-if=\"text\" :style=\"{ position: 'absolute', left: x + 'px', top: y + 'px', width: width + 'px', height: height + 'px', background: '#fff' }\">\n  <a-typography-paragraph :copyable=\"{ text }\" style=\"margin: 0; text-align: center;\"></a-typography-paragraph>\n</div>"),
-    data: function data() {
-      return {
-        text: '',
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0
-      };
-    },
-    mounted: function mounted() {
-      document.addEventListener('selectionchange', this.listener);
-    },
-    unmount: function unmount() {
-      document.removeEventListener('selectionchange', this.listener);
-    },
-    methods: {
-      listener: function listener() {
-        this.text = document.getSelection().toString();
-        console.log(document.getSelection().getRangeAt(0).getClientRects());
-        var _document$getSelectio = document.getSelection().getRangeAt(0).getClientRects(),
-          _document$getSelectio2 = _slicedToArray(_document$getSelectio, 1),
-          _document$getSelectio3 = _document$getSelectio2[0],
-          x = _document$getSelectio3.x,
-          y = _document$getSelectio3.y,
-          width = _document$getSelectio3.width,
-          height = _document$getSelectio3.height;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+  function mount() {
+    var createApp = window.Vue.createApp;
+    var wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
+    document.body.appendChild(wrapper);
+    var app = createApp({
+      template: htmlMinify("<div v-if=\"text\" :style=\"{ position: 'absolute', left: x + 'px', top: y + 'px', width: width + 'px', height: height + 'px', background: '#fff' }\">\n  <a-typography-paragraph :copyable=\"{ text }\" style=\"margin: 0; text-align: center;\"></a-typography-paragraph>\n</div>"),
+      data: function data() {
+        return {
+          text: '',
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      },
+      mounted: function mounted() {
+        document.addEventListener('selectionchange', this.listener);
+      },
+      beforeUnmount: function beforeUnmount() {
+        document.removeEventListener('selectionchange', this.listener);
+        document.body.removeChild(wrapper);
+      },
+      methods: {
+        listener: function listener() {
+          if (document.getSelection()) {
+            this.text = document.getSelection().toString();
+            try {
+              var rects = document.getSelection().getRangeAt(0).getClientRects();
+              if (rects && rects[0]) {
+                var _rects = _slicedToArray(rects, 1),
+                  _rects$ = _rects[0],
+                  x = _rects$.x,
+                  y = _rects$.y,
+                  width = _rects$.width,
+                  height = _rects$.height;
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+              }
+            } catch (e) {}
+          }
+        }
+      },
+      components: {
+        'a-typography-paragraph': TypographyParagraph
       }
+    });
+    app.mount(wrapper);
+    return function () {
+      app.unmount();
+    };
+  }
+  var select = {
+    mounted: function mounted() {
+      this.unmount = mount();
     },
-    components: {
-      'a-typography-paragraph': TypographyParagraph
+    beforeUnmount: function beforeUnmount() {
+      if (typeof this.unmount === 'function') this.unmount();
     }
-  }).mount(wrapper);
+  };
 
   if (!window.$docsify) {
     window.$docsify = {};
@@ -8514,7 +8534,8 @@
     'a-gallery': gallery,
     'a-word': word,
     'a-countdown': countdown,
-    'a-remind': remind
+    'a-remind': remind,
+    'a-select': select
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];

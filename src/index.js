@@ -10,7 +10,7 @@ import gallery from './components/a-gallery';
 import word from './components/a-word';
 import countdown from './components/a-countdown';
 import remind from './components/a-remind';
-import './select';
+import select from './components/a-select';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -29,6 +29,7 @@ window.$docsify.vueComponents = {
   'a-word': word,
   'a-countdown': countdown,
   'a-remind': remind,
+  'a-select': select,
   ...(window.$docsify.vueComponents || {}),
 };
 
