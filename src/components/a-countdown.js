@@ -24,9 +24,9 @@ export default {
   computed: {
     days: function() {
       if (this.type === 'week') {
-        const weeks = Math.ceil((new Date(this.date) - new Date()) / 86400000 / 7);
-        if (weeks > 0) {
-          return Math.ceil((new Date(this.date) - new Date()) / 86400000 / 7) + '周';
+        const weeks = (new Date(this.date) - new Date()) / oneDay / 7;
+        if (weeks >= 1) {
+          return Math.ceil(weeks) + '周';
         }
       }
       return Math.floor((new Date(this.date) - new Date()) / oneDay) + '天';

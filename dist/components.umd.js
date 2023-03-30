@@ -8432,9 +8432,9 @@
     computed: {
       days: function days() {
         if (this.type === 'week') {
-          var weeks = Math.ceil((new Date(this.date) - new Date()) / 86400000 / 7);
-          if (weeks > 0) {
-            return Math.ceil((new Date(this.date) - new Date()) / 86400000 / 7) + '周';
+          var weeks = (new Date(this.date) - new Date()) / oneDay / 7;
+          if (weeks >= 1) {
+            return Math.ceil(weeks) + '周';
           }
         }
         return Math.floor((new Date(this.date) - new Date()) / oneDay) + '天';
