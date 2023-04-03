@@ -8437,7 +8437,7 @@
             return Math.ceil(weeks) + '周';
           }
         }
-        return Math.floor((new Date(this.date) - new Date()) / oneDay) + '天';
+        return Math.ceil((new Date(this.date) - new Date()) / oneDay) + '天';
       }
     }
   };
