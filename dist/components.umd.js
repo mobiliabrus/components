@@ -8393,7 +8393,7 @@
     }
   };
 
-  var css_248z$8 = ".vue-diction-wrapper {\n  padding: 10px 0;\n  border-bottom: 1px solid #eee;\n}\n.vue-diction-part-of-speech {\n  padding-left: 6px;\n}\n.vue-diction-word,\n.vue-diction-meaning {\n  display: inline-block;\n}\n.vue-diction-meanings {\n  display: inline;\n}\n.vue-diction-meaning .vue-diction-definition {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-definition .vue-diction-example {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-part-of-speech + .vue-diction-definition {\n  display: inline;\n}\n";
+  var css_248z$8 = ".vue-diction-wrapper {\n  padding: 10px 0;\n  border-bottom: 1px solid #ccc;\n}\n.vue-diction-part-of-speech {\n  padding-left: 6px;\n}\n.vue-diction-word,\n.vue-diction-meaning {\n  display: inline-block;\n}\n.vue-diction-meanings {\n  display: inline;\n}\n.vue-diction-meaning .vue-diction-definition {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-definition .vue-diction-example {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-part-of-speech + .vue-diction-definition {\n  display: inline;\n}\n";
   styleInject(css_248z$8);
 
   var template$b = htmlMinify("<a-diction :auto-load=\"true\" :show-origin=\"false\" :word=\"word\">{{ title }}</a-diction>");
