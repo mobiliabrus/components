@@ -7690,9 +7690,6 @@
     }
     return '/img/assets/';
   };
-  var fetchErrCatch = function fetchErrCatch(err) {
-    console.error(err);
-  };
   var img = {
     template: template$3,
     props: {
@@ -7752,7 +7749,10 @@
               return res.text();
             }).then(function (content) {
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
-            }).catch(fetchErrCatch).finally(function () {
+            }).finally(function () {
+              if (isLocal && !_this[t]) {
+                _this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + _this.name;
+              }
               _this.loading = false;
             });
           }
@@ -7766,7 +7766,10 @@
               return res.text();
             }).then(function (content) {
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
-            }).catch(fetchErrCatch).finally(function () {
+            }).finally(function () {
+              if (isLocal && !_this[t]) {
+                _this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + _this.name;
+              }
               _this.loading = false;
             });
           }

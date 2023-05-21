@@ -37,10 +37,6 @@ const baseUrl = () => {
   return '/img/assets/';
 };
 
-const fetchErrCatch = (err) => {
-  console.error(err);
-};
-
 export default {
   template,
   props: {
@@ -96,8 +92,10 @@ export default {
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
-            .catch(fetchErrCatch)
             .finally(() => {
+              if (isLocal && !this[t]) {
+                this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + this.name;
+              }
               this.loading = false;
             });
         }
@@ -112,8 +110,10 @@ export default {
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
-            .catch(fetchErrCatch)
             .finally(() => {
+              if (isLocal && !this[t]) {
+                this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + this.name;
+              }
               this.loading = false;
             });
         }
