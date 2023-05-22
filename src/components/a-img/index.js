@@ -32,7 +32,7 @@ const isLocal = location.hostname === 'localhost';
 
 const baseUrl = () => {
   if (isLocal) {
-    return '/packages/img/docs/assets/';
+    return '/packages/img/src/';
   }
   return '/img/assets/';
 };
@@ -94,7 +94,7 @@ export default {
             })
             .finally(() => {
               if (isLocal && !this[t]) {
-                this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + this.name;
+                this[t] = baseUrl() + 'privacy/' + this.name;
               }
               this.loading = false;
             });
@@ -112,15 +112,23 @@ export default {
             })
             .finally(() => {
               if (isLocal && !this[t]) {
-                this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + this.name;
+                this[t] = baseUrl() + 'privacy/' + this.name;
               }
               this.loading = false;
             });
         }
       } else if (this.dir === 'animation') {
-        this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
+        if (isLocal) {
+          this[t] = baseUrl() + 'animation/' + this.name + '.gif';
+        } else {
+          this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
+        }
       } else {
-        this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
+        if (isLocal) {``
+          this[t] = baseUrl() + 'public/' + this.name + '.jpg';
+        } else {
+          this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
+        }
       }
     },
   },

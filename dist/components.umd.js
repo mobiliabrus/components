@@ -7686,7 +7686,7 @@
   var isLocal = location.hostname === 'localhost';
   var baseUrl = function baseUrl() {
     if (isLocal) {
-      return '/packages/img/docs/assets/';
+      return '/packages/img/src/';
     }
     return '/img/assets/';
   };
@@ -7751,7 +7751,7 @@
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
             }).finally(function () {
               if (isLocal && !_this[t]) {
-                _this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + _this.name;
+                _this[t] = baseUrl() + 'privacy/' + _this.name;
               }
               _this.loading = false;
             });
@@ -7768,19 +7768,27 @@
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
             }).finally(function () {
               if (isLocal && !_this[t]) {
-                _this[t] = baseUrl().replace('docs/assets', 'src') + 'privacy/' + _this.name;
+                _this[t] = baseUrl() + 'privacy/' + _this.name;
               }
               _this.loading = false;
             });
           }
         } else if (this.dir === 'animation') {
-          this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter(function (_) {
-            return _;
-          }).join('.');
+          if (isLocal) {
+            this[t] = baseUrl() + 'animation/' + this.name + '.gif';
+          } else {
+            this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter(function (_) {
+              return _;
+            }).join('.');
+          }
         } else {
-          this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter(function (_) {
-            return _;
-          }).join('.');
+          if (isLocal) {
+            this[t] = baseUrl() + 'public/' + this.name + '.jpg';
+          } else {
+            this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter(function (_) {
+              return _;
+            }).join('.');
+          }
         }
       }
     },
