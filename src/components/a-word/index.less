@@ -4,26 +4,25 @@
 }
 
 .vue-diction-part-of-speech {
-  padding-left: 6px;
+  padding-left: 0;
 }
 
-.vue-diction-word,
+.vue-diction-definition {
+  padding-left: 8px;
+}
+
+.vue-diction-example {
+  display: none;
+}
+
 .vue-diction-meaning {
+  display: block;
+  clear: both;
+}
+
+.vue-diction-wrapper .vue-diction-label,
+.vue-diction-wrapper .vue-diction-part-of-speech {
   display: inline-block;
-}
-
-.vue-diction-meanings {
-  display: inline;
-}
-
-.vue-diction-meaning {
-  .vue-diction-definition {
-    display: none;
-    .vue-diction-example {
-      display: none;
-    }
-  }
-  .vue-diction-part-of-speech + .vue-diction-definition {
-    display: inline;
-  }
+  float: none;
+  clear: both;
 }

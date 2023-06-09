@@ -8404,10 +8404,10 @@
     }
   };
 
-  var css_248z$8 = ".vue-diction-wrapper {\n  padding: 10px 0;\n  border-bottom: 1px solid #ccc;\n}\n.vue-diction-part-of-speech {\n  padding-left: 6px;\n}\n.vue-diction-word,\n.vue-diction-meaning {\n  display: inline-block;\n}\n.vue-diction-meanings {\n  display: inline;\n}\n.vue-diction-meaning .vue-diction-definition {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-definition .vue-diction-example {\n  display: none;\n}\n.vue-diction-meaning .vue-diction-part-of-speech + .vue-diction-definition {\n  display: inline;\n}\n";
+  var css_248z$8 = ".vue-diction-wrapper {\n  padding: 10px 0;\n  border-bottom: 1px solid #ccc;\n}\n.vue-diction-part-of-speech {\n  padding-left: 0;\n}\n.vue-diction-definition {\n  padding-left: 8px;\n}\n.vue-diction-example {\n  display: none;\n}\n.vue-diction-meaning {\n  display: block;\n  clear: both;\n}\n.vue-diction-wrapper .vue-diction-label,\n.vue-diction-wrapper .vue-diction-part-of-speech {\n  display: inline-block;\n  float: none;\n  clear: both;\n}\n";
   styleInject(css_248z$8);
 
-  var template$b = htmlMinify("<a-diction :auto-load=\"true\" :show-origin=\"false\" :word=\"word\">{{ title }}</a-diction>");
+  var template$b = htmlMinify("<a-diction :auto-load=\"true\" :show-origin=\"showOrigin\" :word=\"word\">{{ title }}</a-diction>");
   var word = {
     template: template$b,
     props: {
@@ -8416,6 +8416,10 @@
       },
       title: {
         type: String
+      },
+      showOrigin: {
+        type: Boolean,
+        default: false
       }
     },
     components: {
