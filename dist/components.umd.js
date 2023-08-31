@@ -8359,18 +8359,14 @@
     }
   };
 
-  var css_248z$6 = ".badge {\n  border-radius: 2px;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  box-sizing: border-box;\n  margin: 0 2px;\n  vertical-align: text-top;\n}\n\n.badge, .badge-title, .badge-content {\n  display: inline-block;\n  color: #fff;\n  font-size: .7rem;\n  font-weight: 600;\n  font-family: system-ui;\n  white-space: pre-wrap;\n  line-height: 1.26rem;\n}\n\n.badge-title, .badge-content {\n  padding: 0 4px;\n}\n\n.badge-title {\n  background-color: #aaa;\n}\n\n.badge-content {\n  background-color: #75a49e;\n}\n";
+  var css_248z$6 = ".badge {\n  display: block;\n  border-radius: 2px;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  box-sizing: border-box;\n  margin: 0 2px;\n}\n\n.badge, .badge-title, .badge-content {\n  color: #fff;\n  font-size: .7rem;\n  font-weight: 600;\n  font-family: system-ui;\n  white-space: pre-wrap;\n  line-height: 1.26rem;\n}\n\n.badge-title, .badge-content {\n  display: inline-block;\n  padding: 0 4px;\n}\n\n.badge-title {\n  background-color: #aaa;\n}\n\n.badge-content {\n  background-color: #75a49e;\n}\n\nli > .badge, li > p > .badge {\n  display: inline;\n  vertical-align: text-top;\n}\n";
   styleInject(css_248z$6);
 
   var badge = {
-    template: '<span class="badge" :style="{ display: inline ? \'inline-block\' : \'block\' }"><span v-if="title" class="badge-title">{{ title }}</span><span class="badge-content"><slot></slot></span></span>',
+    template: '<span class="badge"><span v-if="title" class="badge-title">{{ title }}</span><span class="badge-content"><slot></slot></span></span>',
     props: {
       title: {
         type: String
-      },
-      inline: {
-        type: Boolean,
-        default: true
       }
     }
   };

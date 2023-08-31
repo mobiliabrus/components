@@ -1,14 +1,13 @@
 .badge {
+  display: block;
   border-radius: 2px;
   overflow: hidden;
   user-select: none;
   box-sizing: border-box;
   margin: 0 2px;
-  vertical-align: text-top;
 }
 
 .badge, .badge-title, .badge-content {
-  display: inline-block;
   color: #fff;
   font-size: .7rem;
   font-weight: 600;
@@ -18,6 +17,7 @@
 }
 
 .badge-title, .badge-content {
+  display: inline-block;
   padding: 0 4px;
 }
 
@@ -27,4 +27,9 @@
 
 .badge-content {
   background-color: #75a49e;
+}
+
+li > .badge, li > p > .badge {
+  display: inline;
+  vertical-align: text-top;
 }
