@@ -8533,9 +8533,24 @@
     }
   };
 
-  var template$e = "<span style=\"font-weight:800;padding:0 2px;\">/</div>";
+  var template$e = "<span style=\"font-weight:800;padding:0 2px;\">/</span>";
   var slash = {
     template: template$e
+  };
+
+  var template$f = "<div @click=\"switchVisible\" :style=\"visible ? '' : 'white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'\"><slot></slot></div>";
+  var collapse = {
+    data: function data() {
+      return {
+        visible: false
+      };
+    },
+    methods: {
+      switchVisible: function switchVisible() {
+        this.visible = !this.visible;
+      }
+    },
+    template: template$f
   };
 
   if (!window.$docsify) {
@@ -8555,7 +8570,8 @@
     'a-countdown': countdown,
     'a-remind': remind,
     'a-select': select,
-    'a-slash': slash
+    'a-slash': slash,
+    'a-collapse': collapse
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
