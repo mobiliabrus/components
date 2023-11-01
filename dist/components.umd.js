@@ -8533,6 +8533,11 @@
     }
   };
 
+  var template$e = "<span style=\"font-weight:800;padding:0 2px;\">/</div>";
+  var slash = {
+    template: template$e
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -8549,7 +8554,8 @@
     'a-word': word,
     'a-countdown': countdown,
     'a-remind': remind,
-    'a-select': select
+    'a-select': select,
+    'a-slash': slash
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
