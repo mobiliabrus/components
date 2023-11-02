@@ -13,6 +13,7 @@ import remind from './components/a-remind';
 import select from './components/a-select';
 import slash from './components/a-slash';
 import collapse from './components/a-collapse';
+import schedule from './components/a-schedule';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -34,6 +35,7 @@ window.$docsify.vueComponents = {
   'a-select': select,
   'a-slash': slash,
   'a-collapse': collapse,
+  'a-schedule': schedule,
   ...(window.$docsify.vueComponents || {}),
 };
 
