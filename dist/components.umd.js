@@ -9064,6 +9064,41 @@
     }
   };
 
+  var template$h = "<span>{{content}}</span>";
+  var count = {
+    template: template$h,
+    data: function data() {
+      return {
+        count: 0
+      };
+    },
+    props: {
+      selector: {
+        type: String,
+        required: true
+      },
+      render: {
+        type: Function,
+        default: function _default(count) {
+          return '共' + count + '条';
+        }
+      }
+    },
+    computed: {
+      content: function content() {
+        return this.render(this.count);
+      }
+    },
+    mounted: function mounted() {
+      var _this = this;
+      if (typeof this.selector === 'string') {
+        this.$nextTick(function () {
+          _this.count = document.querySelectorAll(_this.selector).length || 0;
+        });
+      }
+    }
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -9083,7 +9118,8 @@
     'a-select': select,
     'a-slash': slash,
     'a-collapse': collapse,
-    'a-schedule': schedule
+    'a-schedule': schedule,
+    'a-count': count
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];

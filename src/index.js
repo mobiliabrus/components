@@ -14,6 +14,7 @@ import select from './components/a-select';
 import slash from './components/a-slash';
 import collapse from './components/a-collapse';
 import schedule from './components/a-schedule';
+import count from './components/a-count';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -36,6 +37,7 @@ window.$docsify.vueComponents = {
   'a-slash': slash,
   'a-collapse': collapse,
   'a-schedule': schedule,
+  'a-count': count,
   ...(window.$docsify.vueComponents || {}),
 };
 
