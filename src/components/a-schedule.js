@@ -17,7 +17,9 @@ export default {
   },
   computed: {
     currentWeek: function() {
-      return dayjs().week();
+      // fix: Sunday should be the last day of the week
+      const cv = dayjs().day() === 0 ? 1 : 0;
+      return dayjs().week() - cv;
     },
     weekIndex: function() {
       return this.currentWeek - this.start;

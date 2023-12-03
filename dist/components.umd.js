@@ -9050,7 +9050,9 @@
     },
     computed: {
       currentWeek: function currentWeek() {
-        return dayjs().week();
+        // fix: Sunday should be the last day of the week
+        var cv = dayjs().day() === 0 ? 1 : 0;
+        return dayjs().week() - cv;
       },
       weekIndex: function weekIndex() {
         return this.currentWeek - this.start;
