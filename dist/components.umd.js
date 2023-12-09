@@ -7676,7 +7676,6 @@
           tappedCount = 0; // clear count on maximum tap count
         }
       }
-
       touchMovedLength = 0;
     }
     function onPointerMove(x, y) {
@@ -7837,7 +7836,6 @@
       window.cancelAnimationFrame(this.raf);
       // console.log('destroy')
     },
-
     methods: {
       // API ---------------------------------------------------------------------
       reset: function reset() {
