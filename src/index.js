@@ -15,6 +15,7 @@ import slash from './components/a-slash';
 import collapse from './components/a-collapse';
 import schedule from './components/a-schedule';
 import count from './components/a-count';
+import times from './components/a-times';
 
 if (!window.$docsify) {
   window.$docsify = {};
@@ -38,6 +39,7 @@ window.$docsify.vueComponents = {
   'a-collapse': collapse,
   'a-schedule': schedule,
   'a-count': count,
+  'a-times': times,
   ...(window.$docsify.vueComponents || {}),
 };
 

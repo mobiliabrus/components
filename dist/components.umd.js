@@ -9099,6 +9099,24 @@
     }
   };
 
+  var template$i = "<i>{{ text }}</i>";
+  function convertToOrdinal() {
+    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    var suffixes = ['st', 'nd', 'rd'];
+    var lastDigit = num % 10;
+    var suffix = suffixes[lastDigit - 1] || 'th';
+    return '' + num + suffix;
+  }
+  var times = {
+    template: template$i,
+    props: ['times', 'location'],
+    computed: {
+      text: function text() {
+        return 'The ' + convertToOrdinal(this.times) + ' time' + (this.times > 1 ? 's' : '') + ' in ' + this.location;
+      }
+    }
+  };
+
   if (!window.$docsify) {
     window.$docsify = {};
   }
@@ -9119,7 +9137,8 @@
     'a-slash': slash,
     'a-collapse': collapse,
     'a-schedule': schedule,
-    'a-count': count
+    'a-count': count,
+    'a-times': times
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
