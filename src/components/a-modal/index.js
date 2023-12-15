@@ -3,22 +3,26 @@ import Close from '../a-close';
 import { htmlMinify } from '../util';
 import './index.less';
 
-const template = htmlMinify(`<div style="line-height:initial">
-  <div v-if="visible" class="a-modal-wrapper">
-    <div class="a-modal-close" @click="this.close">
-      <v-close></v-close>
+const template = htmlMinify(`
+<div style="line-height:initial">
+  <Teleport :disabled="!visible" to="body">
+    <div v-if="visible" class="a-modal-wrapper">
+      <div class="a-modal-close" @click="this.close">
+        <v-close></v-close>
+      </div>
+      <div class="a-modal-actions">
+        <slot name="action"></slot>
+      </div>
+      <v-zoomer ref="zoomer" style="width:100%;height:100%;">
+        <slot name="popover"></slot>
+      </v-zoomer>
     </div>
-    <div class="a-modal-actions">
-      <slot name="action"></slot>
+    <div @click="this.pop">
+      <slot name="default"></slot>
     </div>
-    <v-zoomer ref="zoomer" style="width:100%;height:100%;">
-      <slot name="popover"></slot>
-    </v-zoomer>
-  </div>
-  <div @click="this.pop">
-    <slot name="default"></slot>
-  </div>
-</div>`);
+  </Teleport>
+</div>
+`);
 
 export default {
   template,
