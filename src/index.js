@@ -16,10 +16,7 @@ import collapse from './components/a-collapse';
 import schedule from './components/a-schedule';
 import count from './components/a-count';
 import times from './components/a-times';
-
-if (!window.$docsify) {
-  window.$docsify = {};
-}
+import './docsify';
 
 window.$docsify.vueComponents = {
   'a-img': img,
