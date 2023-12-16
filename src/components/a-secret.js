@@ -72,7 +72,7 @@ export default {
             iv
           );
           const content = CryptoJS.enc.Utf8.stringify(raw);
-          this.content = marked.parse(content);
+          this.content = _docsify.compiler.compile(content);
           if (this.autoload) {
             this.decrypt();
           }
@@ -90,7 +90,33 @@ export default {
         this.app = app;
         setTimeout(() => {
           app.mount(this.$refs.t);
+          this.subSidebar();
         }, 0);
+      }
+    },
+    subSidebar: function (level = _docsify.config.subMaxLevel) {
+      const activeEl = document.querySelector(`.sidebar-nav a[href='${location.hash.split('?')[0]}']`);
+      if (!activeEl) return;
+      const genTree = _docsify.compiler.genTree;
+      const tree = _docsify.compiler.tree;
+      const toc = [];
+      const headers = document.getElementById('main').querySelectorAll('h1,h2,h3,h4,h5,h6');
+      headers.forEach((header) => {
+        const level = Number(header.tagName.slice(-1));
+        const title = header.innerText;
+        const slug = header.children[0].getAttribute('href');
+        toc.push({ level, title, slug });
+      });
+
+      toc[0] && toc[0].level === 1 && toc.shift();
+
+      const tree$1 = genTree(toc, level);
+      const innerHTML = tree(tree$1, '{inner}');
+
+      const sidebar = activeEl.parentNode.querySelector('.app-sub-sidebar');
+      if (sidebar) {
+        _docsify.compiler.toc = [];
+        sidebar.innerHTML = innerHTML
       }
     },
   },

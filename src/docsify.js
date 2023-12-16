@@ -8800,6 +8800,9 @@
     return html;
   };
 
+  Compiler.prototype.genTree = genTree;
+  Compiler.prototype.tree = tree;
+
   /**
    * Compile sub sidebar
    * @param {Number} level Type of heading (h<level> tag)
