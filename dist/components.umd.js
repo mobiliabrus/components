@@ -17148,7 +17148,7 @@
   var css_248z$1 = ".a-modal-wrapper {\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100vh;\n  width: 100vw;\n  background: rgba(0, 0, 0, 0.8);\n  z-index: 2147483647;\n  overflow: hidden;\n}\n.a-modal-close {\n  position: absolute;\n  right: 8px;\n  top: 10px;\n  z-index: 2147483646;\n}\n.a-modal-actions {\n  position: absolute;\n  left: 0;\n  bottom: 24px;\n  width: 100%;\n  padding: 8px 10px;\n  z-index: 2147483646;\n}\n";
   styleInject(css_248z$1);
 
-  var template$2 = htmlMinify("\n<div style=\"line-height:initial\">\n  <Teleport :disabled=\"!visible\" to=\"body\">\n    <div v-if=\"visible\" class=\"a-modal-wrapper\">\n      <div class=\"a-modal-close\" @click=\"this.close\">\n        <v-close></v-close>\n      </div>\n      <div class=\"a-modal-actions\">\n        <slot name=\"action\"></slot>\n      </div>\n      <v-zoomer ref=\"zoomer\" style=\"width:100%;height:100%;\">\n        <slot name=\"popover\"></slot>\n      </v-zoomer>\n    </div>\n    <div @click=\"this.pop\">\n      <slot name=\"default\"></slot>\n    </div>\n  </Teleport>\n</div>\n");
+  var template$2 = htmlMinify("\n<Teleport :disabled=\"!visible\" to=\"body\">\n  <div style=\"line-height:initial\">\n    <div v-if=\"visible\" class=\"a-modal-wrapper\">\n      <div class=\"a-modal-close\" @click=\"this.close\">\n        <v-close></v-close>\n      </div>\n      <div class=\"a-modal-actions\">\n        <slot name=\"action\"></slot>\n      </div>\n      <v-zoomer ref=\"zoomer\" style=\"width:100%;height:100%;\">\n        <slot name=\"popover\"></slot>\n      </v-zoomer>\n    </div>\n    <div @click=\"this.pop\">\n      <slot name=\"default\"></slot>\n    </div>\n  </div>\n</Teleport>\n");
   var modal = {
     template: template$2,
     data: function data() {
@@ -17204,7 +17204,7 @@
   var css_248z$2 = ".a-img-popover-item {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  margin: auto;\n}\n.a-img-left-action {\n  width: 50%;\n  text-align: left;\n  float: left;\n}\n.a-img-right-action {\n  width: 50%;\n  text-align: right;\n  float: right;\n}\n";
   styleInject(css_248z$2);
 
-  var template$3 = htmlMinify("<a-modal :scale=\"scale\">\n<template v-slot:action>\n  <div>\n    <div class=\"a-img-left-action\">\n        <t-button type=\"text\" style=\"padding:4px 5px;\"  v-if=\"!src\" @click=\"loadHD\" :loading=\"loading\">\n        <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M128 128h768a42.666667 42.666667 0 0 1 42.666667 42.666667v682.666666a42.666667 42.666667 0 0 1-42.666667 42.666667H128a42.666667 42.666667 0 0 1-42.666667-42.666667V170.666667a42.666667 42.666667 0 0 1 42.666667-42.666667z m192 352V384H256v256h64v-96h85.333333V640H469.333333V384H405.333333v96h-85.333333z m298.666667-32H682.666667a21.333333 21.333333 0 0 1 21.333333 21.333333v85.333334a21.333333 21.333333 0 0 1-21.333333 21.333333h-64v-128zM554.666667 384v256h128a85.333333 85.333333 0 0 0 85.333333-85.333333v-85.333334a85.333333 85.333333 0 0 0-85.333333-85.333333h-128z\" fill=\"#fff\"></path></svg>\n        </t-button>\n    </div>\n    <div class=\"a-img-right-action\">\n        <t-button type=\"text\" style=\"padding:4px 5px;\" @click=\"scaleIn\">\n            <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M149.333333 394.666667c17.066667 0 32-14.933333 32-32v-136.533334l187.733334 187.733334c6.4 6.4 14.933333 8.533333 23.466666 8.533333s17.066667-2.133333 23.466667-8.533333c12.8-12.8 12.8-32 0-44.8l-187.733333-187.733334H362.666667c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32H149.333333c-4.266667 0-8.533333 0-10.666666 2.133334-8.533333 4.266667-14.933333 10.666667-19.2 17.066666-2.133333 4.266667-2.133333 8.533333-2.133334 12.8v213.333334c0 17.066667 14.933333 32 32 32zM874.666667 629.333333c-17.066667 0-32 14.933333-32 32v136.533334L642.133333 597.333333c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l200.533334 200.533334H661.333333c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h213.333334c4.266667 0 8.533333 0 10.666666-2.133334 8.533333-4.266667 14.933333-8.533333 17.066667-17.066666 2.133333-4.266667 2.133333-8.533333 2.133333-10.666667V661.333333c2.133333-17.066667-12.8-32-29.866666-32zM381.866667 595.2l-200.533334 200.533333V661.333333c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v213.333334c0 4.266667 0 8.533333 2.133334 10.666666 4.266667 8.533333 8.533333 14.933333 17.066666 17.066667 4.266667 2.133333 8.533333 2.133333 10.666667 2.133333h213.333333c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32h-136.533333l200.533333-200.533333c12.8-12.8 12.8-32 0-44.8s-29.866667-10.666667-42.666666 0zM904.533333 138.666667c0-2.133333 0-2.133333 0 0-4.266667-8.533333-10.666667-14.933333-17.066666-17.066667-4.266667-2.133333-8.533333-2.133333-10.666667-2.133333H661.333333c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h136.533334l-187.733334 187.733333c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466667-8.533333l187.733333-187.733333V362.666667c0 17.066667 14.933333 32 32 32s32-14.933333 32-32V149.333333c-2.133333-4.266667-2.133333-8.533333-4.266667-10.666666z\" fill=\"#fff\"></path></svg>\n        </t-button>\n        <t-button type=\"text\" style=\"padding:4px 5px;\" @click=\"scaleOut\">\n            <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M313.6 358.4H177.066667c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h213.333333c4.266667 0 8.533333 0 10.666667-2.133333 8.533333-4.266667 14.933333-8.533333 17.066666-17.066667 2.133333-4.266667 2.133333-8.533333 2.133334-10.666667v-213.333333c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v136.533333L172.8 125.866667c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l185.6 187.733333zM695.466667 650.666667H832c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32H618.666667c-4.266667 0-8.533333 0-10.666667 2.133333-8.533333 4.266667-14.933333 8.533333-17.066667 17.066667-2.133333 4.266667-2.133333 8.533333-2.133333 10.666666v213.333334c0 17.066667 14.933333 32 32 32s32-14.933333 32-32v-136.533334l200.533333 200.533334c6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466667-8.533333c12.8-12.8 12.8-32 0-44.8l-204.8-198.4zM435.2 605.866667c-4.266667-8.533333-8.533333-14.933333-17.066667-17.066667-4.266667-2.133333-8.533333-2.133333-10.666666-2.133333H192c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h136.533333L128 851.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466666-8.533333l200.533334-200.533333V832c0 17.066667 14.933333 32 32 32s32-14.933333 32-32V618.666667c-2.133333-4.266667-2.133333-8.533333-4.266667-12.8zM603.733333 403.2c4.266667 8.533333 8.533333 14.933333 17.066667 17.066667 4.266667 2.133333 8.533333 2.133333 10.666667 2.133333h213.333333c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32h-136.533333L896 170.666667c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0l-187.733333 187.733333V177.066667c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v213.333333c2.133333 4.266667 2.133333 8.533333 4.266666 12.8z\" fill=\"#fff\"></path></svg>\n        </t-button>\n    </div>\n  </div>\n</template>\n<template v-slot:popover>\n  <img class=\"a-img-popover-item\" :src=\"visible && (src || srcMin)\" :alt=\"name\" />\n</template>\n<template v-slot:default>\n  <img v-if=\"src || srcMin\" :src=\"visible && !hide && (src || srcMin)\" :alt=\"name\" @load=\"onImageLoad\" style=\"width:100%\" />\n</template>\n</a-modal>");
+  var template$3 = htmlMinify("\n<a-modal :scale=\"scale\">\n  <template v-slot:action>\n    <div>\n      <div class=\"a-img-left-action\">\n          <t-button type=\"text\" style=\"padding:4px 5px;\"  v-if=\"!src\" @click=\"loadHD\" :loading=\"loading\">\n          <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M128 128h768a42.666667 42.666667 0 0 1 42.666667 42.666667v682.666666a42.666667 42.666667 0 0 1-42.666667 42.666667H128a42.666667 42.666667 0 0 1-42.666667-42.666667V170.666667a42.666667 42.666667 0 0 1 42.666667-42.666667z m192 352V384H256v256h64v-96h85.333333V640H469.333333V384H405.333333v96h-85.333333z m298.666667-32H682.666667a21.333333 21.333333 0 0 1 21.333333 21.333333v85.333334a21.333333 21.333333 0 0 1-21.333333 21.333333h-64v-128zM554.666667 384v256h128a85.333333 85.333333 0 0 0 85.333333-85.333333v-85.333334a85.333333 85.333333 0 0 0-85.333333-85.333333h-128z\" fill=\"#fff\"></path></svg>\n          </t-button>\n      </div>\n      <div class=\"a-img-right-action\">\n          <t-button type=\"text\" style=\"padding:4px 5px;\" @click=\"scaleIn\">\n              <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M149.333333 394.666667c17.066667 0 32-14.933333 32-32v-136.533334l187.733334 187.733334c6.4 6.4 14.933333 8.533333 23.466666 8.533333s17.066667-2.133333 23.466667-8.533333c12.8-12.8 12.8-32 0-44.8l-187.733333-187.733334H362.666667c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32H149.333333c-4.266667 0-8.533333 0-10.666666 2.133334-8.533333 4.266667-14.933333 10.666667-19.2 17.066666-2.133333 4.266667-2.133333 8.533333-2.133334 12.8v213.333334c0 17.066667 14.933333 32 32 32zM874.666667 629.333333c-17.066667 0-32 14.933333-32 32v136.533334L642.133333 597.333333c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l200.533334 200.533334H661.333333c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h213.333334c4.266667 0 8.533333 0 10.666666-2.133334 8.533333-4.266667 14.933333-8.533333 17.066667-17.066666 2.133333-4.266667 2.133333-8.533333 2.133333-10.666667V661.333333c2.133333-17.066667-12.8-32-29.866666-32zM381.866667 595.2l-200.533334 200.533333V661.333333c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v213.333334c0 4.266667 0 8.533333 2.133334 10.666666 4.266667 8.533333 8.533333 14.933333 17.066666 17.066667 4.266667 2.133333 8.533333 2.133333 10.666667 2.133333h213.333333c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32h-136.533333l200.533333-200.533333c12.8-12.8 12.8-32 0-44.8s-29.866667-10.666667-42.666666 0zM904.533333 138.666667c0-2.133333 0-2.133333 0 0-4.266667-8.533333-10.666667-14.933333-17.066666-17.066667-4.266667-2.133333-8.533333-2.133333-10.666667-2.133333H661.333333c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h136.533334l-187.733334 187.733333c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466667-8.533333l187.733333-187.733333V362.666667c0 17.066667 14.933333 32 32 32s32-14.933333 32-32V149.333333c-2.133333-4.266667-2.133333-8.533333-4.266667-10.666666z\" fill=\"#fff\"></path></svg>\n          </t-button>\n          <t-button type=\"text\" style=\"padding:4px 5px;\" @click=\"scaleOut\">\n              <svg viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><path d=\"M313.6 358.4H177.066667c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h213.333333c4.266667 0 8.533333 0 10.666667-2.133333 8.533333-4.266667 14.933333-8.533333 17.066666-17.066667 2.133333-4.266667 2.133333-8.533333 2.133334-10.666667v-213.333333c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v136.533333L172.8 125.866667c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l185.6 187.733333zM695.466667 650.666667H832c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32H618.666667c-4.266667 0-8.533333 0-10.666667 2.133333-8.533333 4.266667-14.933333 8.533333-17.066667 17.066667-2.133333 4.266667-2.133333 8.533333-2.133333 10.666666v213.333334c0 17.066667 14.933333 32 32 32s32-14.933333 32-32v-136.533334l200.533333 200.533334c6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466667-8.533333c12.8-12.8 12.8-32 0-44.8l-204.8-198.4zM435.2 605.866667c-4.266667-8.533333-8.533333-14.933333-17.066667-17.066667-4.266667-2.133333-8.533333-2.133333-10.666666-2.133333H192c-17.066667 0-32 14.933333-32 32s14.933333 32 32 32h136.533333L128 851.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466666-8.533333l200.533334-200.533333V832c0 17.066667 14.933333 32 32 32s32-14.933333 32-32V618.666667c-2.133333-4.266667-2.133333-8.533333-4.266667-12.8zM603.733333 403.2c4.266667 8.533333 8.533333 14.933333 17.066667 17.066667 4.266667 2.133333 8.533333 2.133333 10.666667 2.133333h213.333333c17.066667 0 32-14.933333 32-32s-14.933333-32-32-32h-136.533333L896 170.666667c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0l-187.733333 187.733333V177.066667c0-17.066667-14.933333-32-32-32s-32 14.933333-32 32v213.333333c2.133333 4.266667 2.133333 8.533333 4.266666 12.8z\" fill=\"#fff\"></path></svg>\n          </t-button>\n      </div>\n    </div>\n  </template>\n  <template v-slot:popover>\n    <img class=\"a-img-popover-item\" :src=\"visible && (src || srcMin)\" :alt=\"name\" />\n  </template>\n  <template v-slot:default>\n    <div v-if=\"loading && (!src && !srcMin)\">loading image...</div>\n    <img v-if=\"src || srcMin\" :src=\"visible && !hide && (src || srcMin)\" :alt=\"name\" @load=\"onImageLoad\" @error=\"onImageError\" style=\"width:100%\" />\n  </template>\n</a-modal>\n");
   var isLocal = location.hostname === 'localhost';
   var baseUrl = function baseUrl() {
     if (isLocal) {
@@ -17248,6 +17248,9 @@
         this.img = e.target;
         this.scaleIn();
       },
+      onImageError: function onImageError(e) {
+        window.antd.message.error("".concat(e.srcElement.getAttribute('src').split('/').slice(-1), " load error."));
+      },
       scaleIn: function scaleIn() {
         this.scale = window.innerHeight / this.img.offsetHeight;
       },
@@ -17261,38 +17264,39 @@
         var _this = this;
         var suffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
         var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'src';
+        var request = function request(url) {
+          return fetch(baseUrl() + url, {
+            mode: 'cors'
+          }).then(function (res) {
+            if (res.status === 200) return res.text();
+            if (location.hostname !== 'localhost') window.antd.message.error("".concat(res.url.split('/').slice(-1), " ").concat(res.statusText.toLowerCase(), "."));
+            return Promise.reject();
+          }).finally(function () {
+            _this.loading = false;
+          });
+        };
         if (this.dir === 'privacy') {
           if (this.secretKey) {
             var name = suffer ? [this.name.split('.')[0], suffer, 'webp'].join('.') : this.name;
             this.loading = true;
-            fetch(baseUrl() + 'privacy/' + name, {
-              mode: 'cors'
-            }).then(function (res) {
-              return res.text();
-            }).then(function (content) {
+            request('privacy/' + name).then(function (content) {
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
             }).finally(function () {
               if (isLocal && !_this[t]) {
                 _this[t] = baseUrl() + 'privacy/' + _this.name;
               }
-              _this.loading = false;
             });
           }
         } else if (this.dir === 'privacy-gif') {
           if (this.secretKey) {
             var _name = suffer ? [this.name.split('.')[0], suffer ? suffer + '.g1f' : 'gif'].join('.') : this.name;
             this.loading = true;
-            fetch(baseUrl() + 'privacy/' + _name, {
-              mode: 'cors'
-            }).then(function (res) {
-              return res.text();
-            }).then(function (content) {
+            request('privacy/' + _name).then(function (content) {
               _this[t] = crypto(content, _this.secretKey, 'decrypt');
-            }).finally(function () {
+            }).catch(catcher).finally(function () {
               if (isLocal && !_this[t]) {
                 _this[t] = baseUrl() + 'privacy/' + _this.name;
               }
-              _this.loading = false;
             });
           }
         } else if (this.dir === 'animation') {
@@ -17320,7 +17324,7 @@
     }
   };
 
-  var template$4 = htmlMinify("\n<template v-if=\"!visible\">\n<span v-if=\"this.blackout || this.content\" @click=\"decrypt\" style=\"display: inline;\nbackground-color: #333;\ncolor: transparent;\npadding: 0 8px;\nuser-select: none;\nheight: 18px;\nline-height: 18px;\nword-break: break-all;\nletter-spacing: -5.5px;\">{{ this.rawContent }}</span>\n</template>\n<template v-else>\n<span ref=\"t\"></span>\n</template>\n");
+  var template$4 = htmlMinify("\n<template v-if=\"loading\">\n  <div>loading content...</div>\n</template>\n<template v-if=\"!visible\">\n  <span\n    v-if=\"this.blackout || this.content\"\n    @click=\"decrypt\"\n    style=\"\n      display: inline;\n      background-color: #333;\n      color: transparent;\n      padding: 0 8px;\n      user-select: none;\n      height: 18px;\n      line-height: 18px;\n      word-break: break-all;\n      letter-spacing: -5.5px;\n    \"\n  >\n      {{ this.rawContent }}\n  </span>\n</template>\n<template v-else>\n  <span ref=\"t\"></span>\n</template>\n");
   var secret = {
     template: template$4,
     props: {
@@ -17341,6 +17345,7 @@
       return {
         app: undefined,
         visible: false,
+        loading: false,
         rawContent: undefined,
         content: undefined,
         secretKey: localStorage.getItem("lee6's-secret")
@@ -17354,32 +17359,39 @@
     },
     mounted: function mounted() {
       var _this = this;
-      fetch("assets/confidential/".concat(this.name, ".md"), {
-        mode: 'cors'
-      }).then(function (res) {
-        return res.text();
-      }).then(function (rawContent) {
-        _this.rawContent = rawContent;
-        if (_this.secretKey) {
-          var keylength = 16;
-          var keyorigin = _this.secretKey.split('');
-          var key16 = keyorigin.length < 16 ? [].concat(_toConsumableArray(keyorigin), _toConsumableArray(Array.from(new Array(keylength - keyorigin.length)).map(function () {
-            return '0';
-          }))).join('') : key16;
-          var keyutf = cryptoJs.enc.Utf8.parse(key16);
-          var iv = {
-            iv: cryptoJs.enc.Base64.parse(key16)
-          };
-          var raw = cryptoJs.AES.decrypt({
-            ciphertext: cryptoJs.enc.Base64.parse(rawContent)
-          }, keyutf, iv);
-          var content = cryptoJs.enc.Utf8.stringify(raw);
-          _this.content = _docsify.compiler.compile(content);
-          if (_this.autoload) {
-            _this.decrypt();
+      if (this.secretKey) {
+        this.loading = true;
+        fetch("assets/confidential/".concat(this.name, ".md"), {
+          mode: 'cors'
+        }).then(function (res) {
+          if (res.status === 200) return res.text();
+          window.antd.message.error("".concat(res.url.split('/').slice(-1), " ").concat(res.statusText.toLowerCase(), "."));
+          return Promise.reject();
+        }).then(function (rawContent) {
+          _this.rawContent = rawContent;
+          if (_this.secretKey) {
+            var keylength = 16;
+            var keyorigin = _this.secretKey.split('');
+            var key16 = keyorigin.length < 16 ? [].concat(_toConsumableArray(keyorigin), _toConsumableArray(Array.from(new Array(keylength - keyorigin.length)).map(function () {
+              return '0';
+            }))).join('') : key16;
+            var keyutf = cryptoJs.enc.Utf8.parse(key16);
+            var iv = {
+              iv: cryptoJs.enc.Base64.parse(key16)
+            };
+            var raw = cryptoJs.AES.decrypt({
+              ciphertext: cryptoJs.enc.Base64.parse(rawContent)
+            }, keyutf, iv);
+            var content = cryptoJs.enc.Utf8.stringify(raw);
+            _this.content = _docsify.compiler.compile(content);
+            if (_this.autoload) {
+              _this.decrypt();
+            }
           }
-        }
-      });
+        }).finally(function () {
+          return _this.loading = false;
+        });
+      }
     },
     methods: {
       decrypt: function decrypt() {
