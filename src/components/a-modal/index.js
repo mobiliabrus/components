@@ -4,8 +4,8 @@ import { htmlMinify } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
-<div style="line-height:initial">
-  <Teleport :disabled="!visible" to="body">
+<Teleport :disabled="!visible" to="body">
+  <div style="line-height:initial">
     <div v-if="visible" class="a-modal-wrapper">
       <div class="a-modal-close" @click="this.close">
         <v-close></v-close>
@@ -20,8 +20,8 @@ const template = htmlMinify(`
     <div @click="this.pop">
       <slot name="default"></slot>
     </div>
-  </Teleport>
-</div>
+  </div>
+</Teleport>
 `);
 
 export default {
