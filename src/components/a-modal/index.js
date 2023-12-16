@@ -65,9 +65,11 @@ export default {
       this.$nextTick(function () {
         this.zoomIn(this.scale);
       });
+      document.body.style.overflowY = 'hidden';
     },
     close: function () {
       this.visible = false;
+      document.body.style.overflowY = 'auto';
     },
   },
   components: {
