@@ -17289,9 +17289,18 @@
           return fetch(baseUrl() + url, {
             mode: 'cors'
           }).then(function (res) {
-            if (res.status === 200) return res.text();
+            if (res.status === 200) return res.blob();
             if (location.hostname !== 'localhost') window.antd.message.error("".concat(res.url.split('/').slice(-1), " ").concat(res.statusText.toLowerCase(), "."));
             return Promise.reject();
+          }).then(function (blob) {
+            return new Promise(function (resolve) {
+              var reader = new FileReader();
+              reader.onload = function () {
+                var base64 = reader.result.replace(/^data:?.+;?base64,?/, '');
+                resolve(base64);
+              };
+              reader.readAsDataURL(blob);
+            });
           }).then(function (content) {
             var base64 = crypto(content, _this.secretKey, 'decrypt');
             var blobUrl = URL.createObjectURL(base64ToFile(base64));
@@ -17306,6 +17315,7 @@
             request('privacy/' + name).finally(function () {
               if (isLocal && !_this[t]) {
                 _this[t] = baseUrl('src/') + 'privacy/' + _this.name;
+                window.antd.message.error("".concat(name, " asset load fail, use source instead."));
               }
             });
           }
@@ -17315,6 +17325,7 @@
             request('privacy/' + _name).finally(function () {
               if (isLocal && !_this[t]) {
                 _this[t] = baseUrl('src/') + 'privacy/' + _this.name;
+                window.antd.message.error("".concat(_name, " asset load fail, use source instead."));
               }
             });
           }
