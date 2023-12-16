@@ -30,6 +30,12 @@ export default {
       }
     });
   },
+  beforeUnmount() {
+    if (this.map !== null) {
+      this.map.dispose();
+      this.map = null;
+    }
+  },
   computed: {
     autoUpdateMapView: function () {
       return (
@@ -69,7 +75,14 @@ export default {
       }
     },
     $setFitView: function () {
-      const { points = [], walking = [], driving = [], transit = [], line = [], divesites = [] } = this;
+      const {
+        points = [],
+        walking = [],
+        driving = [],
+        transit = [],
+        line = [],
+        divesites = [],
+      } = this;
       const locations = [
         ...points.map(
           ({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)
@@ -84,7 +97,9 @@ export default {
           ({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)
         ),
         ...line.map(({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)),
-        ...divesites.map(({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)),
+        ...divesites.map(
+          ({ latitude, longitude }) => new Microsoft.Maps.Location(latitude, longitude)
+        ),
       ];
       setTimeout(() => {
         this.map.setView({
@@ -160,28 +175,26 @@ export default {
           });
           this.map.entities.push(line);
         } else {
-          Microsoft.Maps.loadModule('Microsoft.Maps.Directions', () => {
-            const directionsManager = new Microsoft.Maps.Directions.DirectionsManager(this.map);
-            directionsManager.setRequestOptions({
-              maxRoutes: 1,
-              routeDraggable: false,
-              routeMode: Microsoft.Maps.Directions.RouteMode[type],
-            });
-            route.forEach(({ address, latitude, longitude }) => {
-              directionsManager.addWaypoint(
-                new Microsoft.Maps.Directions.Waypoint({
-                  address,
-                  isViaPoint: !address,
-                  location: new Microsoft.Maps.Location(latitude, longitude),
-                })
-              );
-            });
-            directionsManager.setRenderOptions({
-              itineraryContainer: document.getElementById('printoutPanel'),
-              autoUpdateMapView: this.autoUpdateMapView,
-            });
-            directionsManager.calculateDirections();
+          const directionsManager = new Microsoft.Maps.Directions.DirectionsManager(this.map);
+          directionsManager.setRequestOptions({
+            maxRoutes: 1,
+            routeDraggable: false,
+            routeMode: Microsoft.Maps.Directions.RouteMode[type],
           });
+          route.forEach(({ address, latitude, longitude }) => {
+            directionsManager.addWaypoint(
+              new Microsoft.Maps.Directions.Waypoint({
+                address,
+                isViaPoint: !address,
+                location: new Microsoft.Maps.Location(latitude, longitude),
+              })
+            );
+          });
+          directionsManager.setRenderOptions({
+            itineraryContainer: document.getElementById('printoutPanel'),
+            autoUpdateMapView: this.autoUpdateMapView,
+          });
+          directionsManager.calculateDirections();
         }
       }
     },

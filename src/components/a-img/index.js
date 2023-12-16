@@ -28,7 +28,8 @@ const template = htmlMinify(`
   </template>
   <template v-slot:default>
     <div v-if="loading && (!src && !srcMin)">loading image...</div>
-    <img v-if="src || srcMin" :src="visible && !hide && (src || srcMin)" :alt="name" @load="onImageLoad" @error="onImageError" style="width:100%" />
+    <img v-if="visible && hide && (src || srcMin)" src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width:100vw;height:56.25vw;max-height:30vh" />
+    <img v-if="visible && !hide && (src || srcMin)" :src="src || srcMin" :alt="name" @load="onImageLoad" @error="onImageError" style="width:100%" />
   </template>
 </a-modal>
 `);
@@ -93,15 +94,16 @@ export default {
       this.load('', 'src');
     },
     load(suffer = '', t = 'src') {
+      const error = (message) => {
+        window.antd.message.error(message);
+        console.warn(message);
+      };
       const request = (url) => {
         this.loading = true;
         return fetch(baseUrl() + url, { mode: 'cors' })
           .then((res) => {
             if (res.status === 200) return res.blob();
-            if (location.hostname !== 'localhost')
-              window.antd.message.error(
-                `${res.url.split('/').slice(-1)} ${res.statusText.toLowerCase()}.`
-              );
+            error(`${res.url.split('/').slice(-1)} ${res.statusText.toLowerCase()}.`);
             return Promise.reject();
           })
           .then(
@@ -109,8 +111,8 @@ export default {
               new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = function () {
-                  const base64 = reader.result.replace(/^data:?.+;?base64,?/, '');
-                  resolve(base64);
+                  const secret = reader.result.split('datatext/plainbase64')[1];
+                  resolve(secret);
                 };
                 reader.readAsDataURL(blob);
               })
@@ -130,7 +132,7 @@ export default {
           request('privacy/' + name).finally(() => {
             if (isLocal && !this[t]) {
               this[t] = baseUrl('src/') + 'privacy/' + this.name;
-              window.antd.message.error(`${name} asset load fail, use source instead.`);
+              error(`${name} asset load fail, use source instead.`);
             }
           });
         }
@@ -142,24 +144,14 @@ export default {
           request('privacy/' + name).finally(() => {
             if (isLocal && !this[t]) {
               this[t] = baseUrl('src/') + 'privacy/' + this.name;
-              window.antd.message.error(`${name} asset load fail, use source instead.`);
+              error(`${name} asset load fail, use source instead.`);
             }
           });
         }
       } else if (this.dir === 'animation') {
-        if (isLocal) {
-          this[t] = baseUrl() + 'animation/' + this.name + '.gif';
-        } else {
-          this[t] =
-            baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
-        }
+        this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
       } else {
-        if (isLocal) {
-          ``;
-          this[t] = baseUrl() + 'public/' + this.name + '.jpg';
-        } else {
-          this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
-        }
+        this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
       }
     },
   },

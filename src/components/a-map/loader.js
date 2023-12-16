@@ -19,7 +19,9 @@ export function loadBingApi(key) {
       script.src = url;
       window.bingAPIReady = () => {
         Microsoft = window.Microsoft;
-        resolve();
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', () => {
+          resolve();
+        });
       };
       script.onerror = (error) => {
         reject(error);
