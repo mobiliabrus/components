@@ -1,7 +1,7 @@
 import crypto from '../crypto.js';
 import modal from '../a-modal';
 import { Button } from 'antd';
-import { htmlMinify } from '../util';
+import { htmlMinify, base64ToFile } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
@@ -35,9 +35,9 @@ const template = htmlMinify(`
 
 const isLocal = location.hostname === 'localhost';
 
-const baseUrl = () => {
+const baseUrl = (localSuffix = 'docs/assets/') => {
   if (isLocal) {
-    return '/packages/img/src/';
+    return '/packages/img/' + localSuffix;
   }
   return '/img/assets/';
 };
@@ -94,6 +94,7 @@ export default {
     },
     load(suffer = '', t = 'src') {
       const request = (url) => {
+        this.loading = true;
         return fetch(baseUrl() + url, { mode: 'cors' })
           .then((res) => {
             if (res.status === 200) return res.text();
@@ -103,6 +104,11 @@ export default {
               );
             return Promise.reject();
           })
+          .then((content) => {
+            const base64 = crypto(content, this.secretKey, 'decrypt');
+            const blobUrl = URL.createObjectURL(base64ToFile(base64));
+            this[t] = blobUrl;
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -110,33 +116,22 @@ export default {
       if (this.dir === 'privacy') {
         if (this.secretKey) {
           const name = suffer ? [this.name.split('.')[0], suffer, 'webp'].join('.') : this.name;
-          this.loading = true;
-          request('privacy/' + name)
-            .then((content) => {
-              this[t] = crypto(content, this.secretKey, 'decrypt');
-            })
-            .finally(() => {
-              if (isLocal && !this[t]) {
-                this[t] = baseUrl() + 'privacy/' + this.name;
-              }
-            });
+          request('privacy/' + name).finally(() => {
+            if (isLocal && !this[t]) {
+              this[t] = baseUrl('src/') + 'privacy/' + this.name;
+            }
+          });
         }
       } else if (this.dir === 'privacy-gif') {
         if (this.secretKey) {
           const name = suffer
             ? [this.name.split('.')[0], suffer ? suffer + '.g1f' : 'gif'].join('.')
             : this.name;
-          this.loading = true;
-          request('privacy/' + name)
-            .then((content) => {
-              this[t] = crypto(content, this.secretKey, 'decrypt');
-            })
-            .catch(catcher)
-            .finally(() => {
-              if (isLocal && !this[t]) {
-                this[t] = baseUrl() + 'privacy/' + this.name;
-              }
-            });
+          request('privacy/' + name).finally(() => {
+            if (isLocal && !this[t]) {
+              this[t] = baseUrl('src/') + 'privacy/' + this.name;
+            }
+          });
         }
       } else if (this.dir === 'animation') {
         if (isLocal) {
