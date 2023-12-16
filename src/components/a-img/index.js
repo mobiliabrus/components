@@ -85,12 +85,25 @@ export default {
       this.load('', 'src');
     },
     load(suffer = '', t = 'src') {
+      const request = (url) => {
+        return fetch(baseUrl() + url, { mode: 'cors' })
+          .then((res) => {
+            if (res.status === 200) return res.text();
+            if (location.hostname !== 'localhost')
+              window.antd.message.error(
+                `${res.url.split('/').slice(-1)} ${res.statusText.toLowerCase()}.`
+              );
+            return Promise.reject();
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      };
       if (this.dir === 'privacy') {
         if (this.secretKey) {
           const name = suffer ? [this.name.split('.')[0], suffer, 'webp'].join('.') : this.name;
           this.loading = true;
-          fetch(baseUrl() + 'privacy/' + name, { mode: 'cors' })
-            .then((res) => res.text())
+          request('privacy/' + name)
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
@@ -98,7 +111,6 @@ export default {
               if (isLocal && !this[t]) {
                 this[t] = baseUrl() + 'privacy/' + this.name;
               }
-              this.loading = false;
             });
         }
       } else if (this.dir === 'privacy-gif') {
@@ -107,26 +119,27 @@ export default {
             ? [this.name.split('.')[0], suffer ? suffer + '.g1f' : 'gif'].join('.')
             : this.name;
           this.loading = true;
-          fetch(baseUrl() + 'privacy/' + name, { mode: 'cors' })
-            .then((res) => res.text())
+          request('privacy/' + name)
             .then((content) => {
               this[t] = crypto(content, this.secretKey, 'decrypt');
             })
+            .catch(catcher)
             .finally(() => {
               if (isLocal && !this[t]) {
                 this[t] = baseUrl() + 'privacy/' + this.name;
               }
-              this.loading = false;
             });
         }
       } else if (this.dir === 'animation') {
         if (isLocal) {
           this[t] = baseUrl() + 'animation/' + this.name + '.gif';
         } else {
-          this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
+          this[t] =
+            baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
         }
       } else {
-        if (isLocal) {``
+        if (isLocal) {
+          ``;
           this[t] = baseUrl() + 'public/' + this.name + '.jpg';
         } else {
           this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
