@@ -97,13 +97,24 @@ export default {
         this.loading = true;
         return fetch(baseUrl() + url, { mode: 'cors' })
           .then((res) => {
-            if (res.status === 200) return res.text();
+            if (res.status === 200) return res.blob();
             if (location.hostname !== 'localhost')
               window.antd.message.error(
                 `${res.url.split('/').slice(-1)} ${res.statusText.toLowerCase()}.`
               );
             return Promise.reject();
           })
+          .then(
+            (blob) =>
+              new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function () {
+                  const base64 = reader.result.replace(/^data:?.+;?base64,?/, '');
+                  resolve(base64);
+                };
+                reader.readAsDataURL(blob);
+              })
+          )
           .then((content) => {
             const base64 = crypto(content, this.secretKey, 'decrypt');
             const blobUrl = URL.createObjectURL(base64ToFile(base64));
@@ -119,6 +130,7 @@ export default {
           request('privacy/' + name).finally(() => {
             if (isLocal && !this[t]) {
               this[t] = baseUrl('src/') + 'privacy/' + this.name;
+              window.antd.message.error(`${name} asset load fail, use source instead.`);
             }
           });
         }
@@ -130,6 +142,7 @@ export default {
           request('privacy/' + name).finally(() => {
             if (isLocal && !this[t]) {
               this[t] = baseUrl('src/') + 'privacy/' + this.name;
+              window.antd.message.error(`${name} asset load fail, use source instead.`);
             }
           });
         }
