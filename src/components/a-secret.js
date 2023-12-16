@@ -2,19 +2,30 @@ import CryptoJS from 'crypto-js';
 import { htmlMinify } from './util';
 
 const template = htmlMinify(`
+<template v-if="loading">
+  <div>loading content...</div>
+</template>
 <template v-if="!visible">
-<span v-if="this.blackout || this.content" @click="decrypt" style="display: inline;
-background-color: #333;
-color: transparent;
-padding: 0 8px;
-user-select: none;
-height: 18px;
-line-height: 18px;
-word-break: break-all;
-letter-spacing: -5.5px;">{{ this.rawContent }}</span>
+  <span
+    v-if="this.blackout || this.content"
+    @click="decrypt"
+    style="
+      display: inline;
+      background-color: #333;
+      color: transparent;
+      padding: 0 8px;
+      user-select: none;
+      height: 18px;
+      line-height: 18px;
+      word-break: break-all;
+      letter-spacing: -5.5px;
+    "
+  >
+      {{ this.rawContent }}
+  </span>
 </template>
 <template v-else>
-<span ref="t"></span>
+  <span ref="t"></span>
 </template>
 `);
 
@@ -38,6 +49,7 @@ export default {
     return {
       app: undefined,
       visible: false,
+      loading: false,
       rawContent: undefined,
       content: undefined,
       secretKey: localStorage.getItem("lee6's-secret"),
@@ -50,34 +62,44 @@ export default {
     }
   },
   mounted() {
-    fetch(`assets/confidential/${this.name}.md`, { mode: 'cors' })
-      .then((res) => res.text())
-      .then((rawContent) => {
-        this.rawContent = rawContent;
-        if (this.secretKey) {
-          const keylength = 16;
-          const keyorigin = this.secretKey.split('');
-          const key16 =
-            keyorigin.length < 16
-              ? [
-                  ...keyorigin,
-                  ...Array.from(new Array(keylength - keyorigin.length)).map(() => '0'),
-                ].join('')
-              : key16;
-          const keyutf = CryptoJS.enc.Utf8.parse(key16);
-          const iv = { iv: CryptoJS.enc.Base64.parse(key16) };
-          const raw = CryptoJS.AES.decrypt(
-            { ciphertext: CryptoJS.enc.Base64.parse(rawContent) },
-            keyutf,
-            iv
+    if (this.secretKey) {
+      this.loading = true;
+      fetch(`assets/confidential/${this.name}.md`, { mode: 'cors' })
+        .then((res) => {
+          if (res.status === 200) return res.text();
+          window.antd.message.error(
+            `${res.url.split('/').slice(-1)} ${res.statusText.toLowerCase()}.`
           );
-          const content = CryptoJS.enc.Utf8.stringify(raw);
-          this.content = _docsify.compiler.compile(content);
-          if (this.autoload) {
-            this.decrypt();
+          return Promise.reject();
+        })
+        .then((rawContent) => {
+          this.rawContent = rawContent;
+          if (this.secretKey) {
+            const keylength = 16;
+            const keyorigin = this.secretKey.split('');
+            const key16 =
+              keyorigin.length < 16
+                ? [
+                    ...keyorigin,
+                    ...Array.from(new Array(keylength - keyorigin.length)).map(() => '0'),
+                  ].join('')
+                : key16;
+            const keyutf = CryptoJS.enc.Utf8.parse(key16);
+            const iv = { iv: CryptoJS.enc.Base64.parse(key16) };
+            const raw = CryptoJS.AES.decrypt(
+              { ciphertext: CryptoJS.enc.Base64.parse(rawContent) },
+              keyutf,
+              iv
+            );
+            const content = CryptoJS.enc.Utf8.stringify(raw);
+            this.content = _docsify.compiler.compile(content);
+            if (this.autoload) {
+              this.decrypt();
+            }
           }
-        }
-      });
+        })
+        .finally(() => (this.loading = false));
+    }
   },
   methods: {
     decrypt: function () {
@@ -95,7 +117,9 @@ export default {
       }
     },
     subSidebar: function (level = _docsify.config.subMaxLevel) {
-      const activeEl = document.querySelector(`.sidebar-nav a[href='${location.hash.split('?')[0]}']`);
+      const activeEl = document.querySelector(
+        `.sidebar-nav a[href='${location.hash.split('?')[0]}']`
+      );
       if (!activeEl) return;
       const genTree = _docsify.compiler.genTree;
       const tree = _docsify.compiler.tree;
@@ -116,7 +140,7 @@ export default {
       const sidebar = activeEl.parentNode.querySelector('.app-sub-sidebar');
       if (sidebar) {
         _docsify.compiler.toc = [];
-        sidebar.innerHTML = innerHTML
+        sidebar.innerHTML = innerHTML;
       }
     },
   },
