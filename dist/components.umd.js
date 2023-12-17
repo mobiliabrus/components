@@ -17850,12 +17850,13 @@
   var css_248z$5 = ".map-wrapper {\n  position: relative;\n}\n.map-wrapper .map {\n  width: 100%;\n  height: 100%;\n}\n.map-mask {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 1;\n}\n.map-fullscreen {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100vh;\n  z-index: 2147483647;\n}\n";
   styleInject(css_248z$5);
 
-  var template$8 = htmlMinify("<div>\n<div v-if=\"fullscreen\" class=\"map-wrapper map-fullscreen\">\n  <div @click=\"this.closeFullScreen\" style=\"position:absolute;right:8px;top:10px;z-index:2147483646\">\n        <v-close></v-close>\n  </div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :divesites=\"this._divesites\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  :line=\"this._line\"\n  ></v-map>\n</div>\n<div class=\"map-wrapper\">\n  <div class=\"map-mask\" @click=\"this.switchFullScreen\"></div>\n  <v-map\n  :center=\"this._center\"\n  :points=\"this._points\"\n  :divesites=\"this._divesites\"\n  :walking=\"this._walking\"\n  :transit=\"this._transit\"\n  :driving=\"this._driving\"\n  :line=\"this._line\"\n  ></v-map>\n</div>\n</div>");
+  var template$8 = htmlMinify("\n<a-lazyload @load=\"onLoad\">\n  <div v-if=\"fullscreen\" class=\"map-wrapper map-fullscreen\">\n    <div @click=\"this.closeFullScreen\" style=\"position:absolute;right:8px;top:10px;z-index:2147483646\">\n          <v-close></v-close>\n    </div>\n    <v-map\n    :center=\"this._center\"\n    :points=\"this._points\"\n    :divesites=\"this._divesites\"\n    :walking=\"this._walking\"\n    :transit=\"this._transit\"\n    :driving=\"this._driving\"\n    :line=\"this._line\"\n    ></v-map>\n  </div>\n  <div v-if=\"loaded\" class=\"map-wrapper\">\n    <div class=\"map-mask\" @click=\"this.switchFullScreen\"></div>\n    <v-map\n    :center=\"this._center\"\n    :points=\"this._points\"\n    :divesites=\"this._divesites\"\n    :walking=\"this._walking\"\n    :transit=\"this._transit\"\n    :driving=\"this._driving\"\n    :line=\"this._line\"\n    ></v-map>\n  </div>\n</a-lazyload>");
   var map = {
     template: template$8,
     props: ['center', 'points', 'walking', 'transit', 'driving', 'line', 'divesites'],
     data: function data() {
       return {
+        loaded: false,
         fullscreen: false
       };
     },
@@ -17962,6 +17963,9 @@
       }
     },
     methods: {
+      onLoad: function onLoad() {
+        this.loaded = true;
+      },
       switchFullScreen: function switchFullScreen() {
         this.fullscreen = true;
       },
@@ -17971,7 +17975,8 @@
     },
     components: {
       'v-map': Map,
-      'v-close': Close
+      'v-close': Close,
+      'a-lazyload': lazyload
     }
   };
 
