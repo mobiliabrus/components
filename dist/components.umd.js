@@ -17567,8 +17567,8 @@
       });
     },
     beforeUnmount: function beforeUnmount() {
-      if (this.map !== null) {
-        this.map.dispose();
+      if (this.map) {
+        if (typeof this.map.dispose === 'function') this.map.dispose();
         this.map = null;
       }
     },
