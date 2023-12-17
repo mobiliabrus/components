@@ -17268,10 +17268,11 @@
       },
       shouldLoad: function shouldLoad(next) {
         var clientHeight = document.documentElement.clientHeight;
+        var preload = 0.5 * clientHeight;
         var _this$$refs$lazy$getB = this.$refs.lazy.getBoundingClientRect(),
           bottom = _this$$refs$lazy$getB.bottom,
           top = _this$$refs$lazy$getB.top;
-        if (!this.loaded && bottom - clientHeight < 0 && top > 0) {
+        if (!this.loaded && bottom - clientHeight < preload && top > 0 - preload) {
           this.loaded = true;
           this.$emit('load');
           this.dismiss();

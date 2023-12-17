@@ -38,8 +38,9 @@ export default {
     },
     shouldLoad(next) {
       const clientHeight = document.documentElement.clientHeight;
+      const preload = 0.5 * clientHeight;
       const { bottom, top } = this.$refs.lazy.getBoundingClientRect();
-      if (!this.loaded && bottom - clientHeight < 0 && top > 0) {
+      if (!this.loaded && bottom - clientHeight < preload && top > 0 - preload) {
         this.loaded = true;
         this.$emit('load');
         this.dismiss();
