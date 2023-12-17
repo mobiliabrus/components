@@ -5,7 +5,8 @@ import { htmlMinify, base64ToFile } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
-<a-modal :scale="scale">
+<div v-if="loading && (!src && !srcMin)" style="user-select:none">loading image...</div>
+<a-modal v-if="!loading || (src || srcMin)" :scale="scale">
   <template v-slot:action>
     <div>
       <div class="a-img-left-action">
@@ -27,7 +28,6 @@ const template = htmlMinify(`
     <img class="a-img-popover-item" :src="visible && (src || srcMin)" :alt="name" />
   </template>
   <template v-slot:default>
-    <div v-if="loading && (!src && !srcMin)">loading image...</div>
     <img v-if="visible && hide && (src || srcMin)" src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width:100vw;height:56.25vw;max-height:30vh" />
     <img v-if="visible && !hide && (src || srcMin)" :src="src || srcMin" :alt="name" @load="onImageLoad" @error="onImageError" style="width:100%" />
   </template>
