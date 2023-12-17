@@ -17,6 +17,7 @@ import collapse from './components/a-collapse';
 import schedule from './components/a-schedule';
 import count from './components/a-count';
 import times from './components/a-times';
+import lazyload from './components/a-lazyload';
 
 window.$docsify.vueComponents = {
   'a-img': img,
@@ -37,6 +38,7 @@ window.$docsify.vueComponents = {
   'a-schedule': schedule,
   'a-count': count,
   'a-times': times,
+  'a-lazyload': lazyload,
   ...(window.$docsify.vueComponents || {}),
 };
 

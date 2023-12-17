@@ -3,7 +3,7 @@ import { htmlMinify } from './util';
 
 const template = htmlMinify(`
 <template v-if="loading">
-  <div>loading content...</div>
+  <a-skeleton></a-skeleton>
 </template>
 <template v-if="!visible">
   <span
@@ -144,4 +144,7 @@ export default {
       }
     },
   },
+  components: {
+    'a-skeleton': window.antd.Skeleton
+  }
 };
