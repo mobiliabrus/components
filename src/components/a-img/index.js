@@ -8,7 +8,7 @@ import './index.less';
 const template = htmlMinify(`
 <a-lazyload @load="onLoad">
   <div v-if="loading && (!src && !srcMin)" style="user-select:none">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width:100%;height:75vw;max-height:300px" />
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width:100%;height:75vw;max-height:200px" />
   </div>
   <a-modal v-if="!loading || (src || srcMin)" :scale="scale">
     <template v-slot:action>
