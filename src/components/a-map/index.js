@@ -1,42 +1,45 @@
 import Map from './Map';
 import Close from '../a-close';
+import Lazyload from '../a-lazyload';
 import { htmlMinify } from '../util';
 import './index.less';
 
-const template = htmlMinify(`<div>
-<div v-if="fullscreen" class="map-wrapper map-fullscreen">
-  <div @click="this.closeFullScreen" style="position:absolute;right:8px;top:10px;z-index:2147483646">
-        <v-close></v-close>
+const template = htmlMinify(`
+<a-lazyload @load="onLoad">
+  <div v-if="fullscreen" class="map-wrapper map-fullscreen">
+    <div @click="this.closeFullScreen" style="position:absolute;right:8px;top:10px;z-index:2147483646">
+          <v-close></v-close>
+    </div>
+    <v-map
+    :center="this._center"
+    :points="this._points"
+    :divesites="this._divesites"
+    :walking="this._walking"
+    :transit="this._transit"
+    :driving="this._driving"
+    :line="this._line"
+    ></v-map>
   </div>
-  <v-map
-  :center="this._center"
-  :points="this._points"
-  :divesites="this._divesites"
-  :walking="this._walking"
-  :transit="this._transit"
-  :driving="this._driving"
-  :line="this._line"
-  ></v-map>
-</div>
-<div class="map-wrapper">
-  <div class="map-mask" @click="this.switchFullScreen"></div>
-  <v-map
-  :center="this._center"
-  :points="this._points"
-  :divesites="this._divesites"
-  :walking="this._walking"
-  :transit="this._transit"
-  :driving="this._driving"
-  :line="this._line"
-  ></v-map>
-</div>
-</div>`);
+  <div v-if="loaded" class="map-wrapper">
+    <div class="map-mask" @click="this.switchFullScreen"></div>
+    <v-map
+    :center="this._center"
+    :points="this._points"
+    :divesites="this._divesites"
+    :walking="this._walking"
+    :transit="this._transit"
+    :driving="this._driving"
+    :line="this._line"
+    ></v-map>
+  </div>
+</a-lazyload>`);
 
 export default {
   template,
   props: ['center', 'points', 'walking', 'transit', 'driving', 'line', 'divesites'],
   data: function () {
     return {
+      loaded: false,
       fullscreen: false,
     };
   },
@@ -104,6 +107,9 @@ export default {
     },
   },
   methods: {
+    onLoad() {
+      this.loaded = true;
+    },
     switchFullScreen: function () {
       this.fullscreen = true;
     },
@@ -114,5 +120,6 @@ export default {
   components: {
     'v-map': Map,
     'v-close': Close,
+    'a-lazyload': Lazyload,
   },
 };
