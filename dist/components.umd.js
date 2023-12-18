@@ -17499,10 +17499,9 @@
               iv: cryptoJs.enc.Base64.parse(key16)
             };
             var raw = cryptoJs.AES.decrypt({
-              ciphertext: cryptoJs.enc.Base64.parse(_rawContent)
+              ciphertext: cryptoJs.enc.Base64.parse(rawContent)
             }, keyutf, iv);
-            var _rawContent = cryptoJs.enc.Utf8.stringify(raw);
-            var content = macau(_rawContent);
+            var content = macau(cryptoJs.enc.Utf8.stringify(raw));
             _this.content = _docsify.compiler.compile(content);
             if (_this.autoload) {
               _this.decrypt();

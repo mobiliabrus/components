@@ -92,8 +92,7 @@ export default {
               keyutf,
               iv
             );
-            const rawContent = CryptoJS.enc.Utf8.stringify(raw);
-            const content = macau(rawContent);
+            const content = macau(CryptoJS.enc.Utf8.stringify(raw));
             this.content = _docsify.compiler.compile(content);
             if (this.autoload) {
               this.decrypt();
