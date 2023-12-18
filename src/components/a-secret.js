@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import macau from '../macau';
 import { htmlMinify } from './util';
 
 const template = htmlMinify(`
@@ -91,7 +92,8 @@ export default {
               keyutf,
               iv
             );
-            const content = CryptoJS.enc.Utf8.stringify(raw);
+            const rawContent = CryptoJS.enc.Utf8.stringify(raw);
+            const content = macau(rawContent);
             this.content = _docsify.compiler.compile(content);
             if (this.autoload) {
               this.decrypt();
@@ -145,6 +147,6 @@ export default {
     },
   },
   components: {
-    'a-skeleton': window.antd.Skeleton
-  }
+    'a-skeleton': window.antd.Skeleton,
+  },
 };

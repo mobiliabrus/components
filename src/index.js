@@ -1,4 +1,5 @@
 import './docsify';
+import macau from './macau';
 import img from './components/a-img';
 import secret from './components/a-secret';
 import flight from './components/a-flight';
@@ -46,25 +47,8 @@ if (!Array.isArray(window.$docsify.plugins)) {
   window.$docsify.plugins = [];
 }
 
-window.$docsify.plugins.push(function (hook, vm) {
-  hook.beforeEach(function (raw) {
-    const reg = /`{3}<([^`]+)>\n([^`]+)`{3}/g;
-    return raw.replace(reg, function (_, c, p) {
-      let slot = '';
-      let props = '';
-      p.split(/\n/).forEach((q) => {
-        const [prop, value] = q.trim().split(':');
-        if (prop) {
-          if (typeof value === 'undefined') {
-            slot = prop;
-          } else {
-            props += ` ${prop}="${value}"`;
-          }
-        }
-      });
-      return `<${c}${props}>${slot}</${c}>`;
-    });
-  });
+window.$docsify.plugins.push(function (hook) {
+  hook.beforeEach(macau);
 });
 
 export {};
