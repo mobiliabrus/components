@@ -17284,7 +17284,7 @@
     }
   };
 
-  var template$4 = htmlMinify("\n<div style=\"width:100%;height:120px;text-align:center;line-height:120px;background:#fafafa\">\n  <slot name=\"default\"></slot>\n</div>\n");
+  var template$4 = htmlMinify("\n<div style=\"width:100%;height:160px;text-align:center;line-height:120px;background:#fafafa\">\n  <slot name=\"default\"></slot>\n</div>\n");
   var placeholder = {
     template: template$4
   };
