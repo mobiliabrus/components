@@ -8,5 +8,4 @@ const template = htmlMinify(`
 
 export default {
   template,
-  props: ['type'],
 };
