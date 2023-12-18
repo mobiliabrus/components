@@ -9224,6 +9224,28 @@
     });
   })();
 
+  function macau(raw) {
+    var reg = /`{3}<([^`]+)>\n([^`]+)`{3}/g;
+    return raw.replace(reg, function (_, c, p) {
+      var slot = '';
+      var props = '';
+      p.split(/\n/).forEach(function (q) {
+        var _q$trim$split = q.trim().split(':'),
+          _q$trim$split2 = _slicedToArray(_q$trim$split, 2),
+          prop = _q$trim$split2[0],
+          value = _q$trim$split2[1];
+        if (prop) {
+          if (typeof value === 'undefined') {
+            slot = prop;
+          } else {
+            props += " ".concat(prop, "=\"").concat(value, "\"");
+          }
+        }
+      });
+      return "<".concat(c).concat(props, ">").concat(slot, "</").concat(c, ">");
+    });
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, basedir, module) {
@@ -17477,9 +17499,10 @@
               iv: cryptoJs.enc.Base64.parse(key16)
             };
             var raw = cryptoJs.AES.decrypt({
-              ciphertext: cryptoJs.enc.Base64.parse(rawContent)
+              ciphertext: cryptoJs.enc.Base64.parse(_rawContent)
             }, keyutf, iv);
-            var content = cryptoJs.enc.Utf8.stringify(raw);
+            var _rawContent = cryptoJs.enc.Utf8.stringify(raw);
+            var content = macau(_rawContent);
             _this.content = _docsify.compiler.compile(content);
             if (_this.autoload) {
               _this.decrypt();
@@ -18337,28 +18360,8 @@
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
   }
-  window.$docsify.plugins.push(function (hook, vm) {
-    hook.beforeEach(function (raw) {
-      var reg = /`{3}<([^`]+)>\n([^`]+)`{3}/g;
-      return raw.replace(reg, function (_, c, p) {
-        var slot = '';
-        var props = '';
-        p.split(/\n/).forEach(function (q) {
-          var _q$trim$split = q.trim().split(':'),
-            _q$trim$split2 = _slicedToArray(_q$trim$split, 2),
-            prop = _q$trim$split2[0],
-            value = _q$trim$split2[1];
-          if (prop) {
-            if (typeof value === 'undefined') {
-              slot = prop;
-            } else {
-              props += " ".concat(prop, "=\"").concat(value, "\"");
-            }
-          }
-        });
-        return "<".concat(c).concat(props, ">").concat(slot, "</").concat(c, ">");
-      });
-    });
+  window.$docsify.plugins.push(function (hook) {
+    hook.beforeEach(macau);
   });
 
 })));
