@@ -1,15 +1,14 @@
 import crypto from '../crypto.js';
 import modal from '../a-modal';
 import lazyload from '../a-lazyload';
+import placeholder from '../a-placeholder.js';
 import { Button } from 'antd';
 import { htmlMinify, base64ToFile } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
 <a-lazyload @load="onLoad">
-  <div v-if="loading && (!src && !srcMin)" style="user-select:none">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width:100%;height:75vw;max-height:200px" />
-  </div>
+  <a-placeholder v-if="visible && (!src && !srcMin)"></a-placeholder>
   <a-modal v-if="!loading || (src || srcMin)" :scale="scale">
     <template v-slot:action>
       <div>
@@ -73,7 +72,7 @@ export default {
       scale: undefined,
       secretKey,
       loading: false,
-      visible: !(this.dir === 'assert' && !secretKey),
+      visible: !(this.dir === 'public' && !secretKey),
     };
   },
   methods: {
@@ -163,6 +162,7 @@ export default {
   components: {
     'a-modal': modal,
     'a-lazyload': lazyload,
+    'a-placeholder': placeholder,
     't-button': Button,
   },
 };

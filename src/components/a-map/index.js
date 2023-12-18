@@ -1,6 +1,7 @@
 import Map from './Map';
-import Close from '../a-close';
-import Lazyload from '../a-lazyload';
+import close from '../a-close';
+import lazyload from '../a-lazyload';
+import placeholder from '../a-placeholder';
 import { htmlMinify } from '../util';
 import './index.less';
 
@@ -32,6 +33,7 @@ const template = htmlMinify(`
     :line="this._line"
     ></v-map>
   </div>
+  <a-placeholder v-else><a-placeholder/>
 </a-lazyload>`);
 
 export default {
@@ -119,7 +121,8 @@ export default {
   },
   components: {
     'v-map': Map,
-    'v-close': Close,
-    'a-lazyload': Lazyload,
+    'v-close': close,
+    'a-lazyload': lazyload,
+    'a-placeholder': placeholder,
   },
 };
