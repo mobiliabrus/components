@@ -18059,7 +18059,7 @@
         var secretKey = getSecret();
         return this.img.filter(function (i) {
           var _i$dir;
-          return !((_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.incudes('privacy')) || !!secretKey;
+          return !((_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.includes('privacy')) || !!secretKey;
         });
       }
     },
@@ -18111,7 +18111,7 @@
         var secretKey = getSecret();
         return this.img.filter(function (i) {
           var _i$dir;
-          return !((_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.incudes('privacy')) || !!secretKey;
+          return !(i === null || i === void 0 ? void 0 : (_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.includes('privacy')) || !!secretKey;
         });
       }
     },
