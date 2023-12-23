@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import macau from '../macau';
-import { htmlMinify } from './util';
+import { htmlMinify, getSecret } from './util';
 
 const template = htmlMinify(`
 <template v-if="loading">
@@ -53,7 +53,7 @@ export default {
       loading: false,
       rawContent: undefined,
       content: undefined,
-      secretKey: localStorage.getItem("lee6's-secret"),
+      secretKey: getSecret(),
     };
   },
   beforeUnmount() {

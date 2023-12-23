@@ -20,3 +20,5 @@ export const base64ToFile = (base64) => {
   const fileData = new Blob([new Uint8Array(array)], { type: mime });
   return new File([fileData], `${new Date().getTime()}`, { type: mime });
 };
+
+export const getSecret = () => localStorage.getItem("lee6's-secret");

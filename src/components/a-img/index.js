@@ -3,7 +3,7 @@ import modal from '../a-modal';
 import lazyload from '../a-lazyload';
 import placeholder from '../a-placeholder.js';
 import { Button } from 'antd';
-import { htmlMinify, base64ToFile } from '../util';
+import { htmlMinify, base64ToFile, getSecret } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
@@ -64,7 +64,7 @@ export default {
     },
   },
   data: function () {
-    const secretKey = localStorage.getItem("lee6's-secret");
+    const secretKey = getSecret();
     return {
       img: undefined,
       src: undefined,
@@ -72,7 +72,7 @@ export default {
       scale: undefined,
       secretKey,
       loading: false,
-      visible: !(this.dir === 'public' && !secretKey),
+      visible: !this.dir.includes('privacy') || !!secretKey,
     };
   },
   methods: {
