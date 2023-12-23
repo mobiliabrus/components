@@ -17192,6 +17192,9 @@
       type: mime
     });
   };
+  var getSecret$1 = function getSecret() {
+    return localStorage.getItem("lee6's-secret");
+  };
 
   var template$1 = htmlMinify("<svg fill=\"#fff\" t=\"1658039132650\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"2251\" width=\"25\" height=\"25\">\n<path d=\"M556.8 512L832 236.8c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0L512 467.2l-275.2-277.333333c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l275.2 277.333333-277.333333 275.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.933333 8.533333 23.466666 8.533333s17.066667-2.133333 23.466667-8.533333L512 556.8 787.2 832c6.4 6.4 14.933333 8.533333 23.466667 8.533333s17.066667-2.133333 23.466666-8.533333c12.8-12.8 12.8-32 0-44.8L556.8 512z\" p-id=\"2252\"></path>\n</svg>");
   var close = {
@@ -17340,7 +17343,7 @@
       }
     },
     data: function data() {
-      var secretKey = localStorage.getItem("lee6's-secret");
+      var secretKey = getSecret$1();
       return {
         img: undefined,
         src: undefined,
@@ -17348,7 +17351,7 @@
         scale: undefined,
         secretKey: secretKey,
         loading: false,
-        visible: !(this.dir === 'public' && !secretKey)
+        visible: !this.dir.includes('privacy') || !!secretKey
       };
     },
     methods: {
@@ -17467,7 +17470,7 @@
         loading: false,
         rawContent: undefined,
         content: undefined,
-        secretKey: localStorage.getItem("lee6's-secret")
+        secretKey: getSecret$1()
       };
     },
     beforeUnmount: function beforeUnmount() {
@@ -18044,13 +18047,24 @@
   var Tooltip = window.antd && window.antd.Tooltip;
   var TypographyParagraph = window.antd && window.antd.TypographyParagraph;
 
-  var template$b = htmlMinify("<a-carousel autoplay>\n<div v-if=\"img\" v-for=\"i in img\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</a-carousel>");
+  var template$b = htmlMinify("\n<a-carousel autoplay v-if=\"visible\">\n<div v-for=\"i in content\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</a-carousel>\n");
   var carousel = {
     template: template$b,
     props: ['img'],
+    computed: {
+      visible: function visible() {
+        return this.content.length > 0;
+      },
+      content: function content() {
+        var secretKey = getSecret$1();
+        return this.img.filter(function (i) {
+          return !i.dir.incudes('privacy') || !!secretKey;
+        });
+      }
+    },
     components: {
-      "a-carousel": Carousel,
-      "a-img": img
+      'a-carousel': Carousel,
+      'a-img': img
     }
   };
 
@@ -18081,13 +18095,22 @@
   var css_248z$7 = ".gallery {\n  display: flex;\n}\n.gallery .gallery-item {\n  display: inline-block;\n  padding: 1px;\n}\n";
   styleInject(css_248z$7);
 
-  var template$c = htmlMinify("\n<div class=\"gallery\" v-if=\"img\">\n<div class=\"gallery-item\" v-for=\"i in img\" :style=\"{width}\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</div>\n");
+  var template$c = htmlMinify("\n<div class=\"gallery\" v-if=\"visible\">\n<div class=\"gallery-item\" v-for=\"i in content\" :style=\"{width}\">\n<a-img :name=\"i.name\" :dir=\"i.dir\" :key=\"i.name\"></a-img>\n</div>\n</div>\n");
   var gallery = {
     template: template$c,
     props: ['img'],
     computed: {
       width: function width() {
-        return "".concat(100 / this.img.length, "%");
+        return "".concat(100 / this.content.length, "%");
+      },
+      visible: function visible() {
+        return this.content.length > 0;
+      },
+      content: function content() {
+        var secretKey = getSecret();
+        return this.img.filter(function (i) {
+          return !i.dir.incudes('privacy') || !!secretKey;
+        });
       }
     },
     components: {
