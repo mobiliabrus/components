@@ -20,7 +20,7 @@ export default {
     content: function () {
       const secretKey = getSecret();
       return this.img.filter((i) => {
-        return !i.dir.incudes('privacy') || !!secretKey;
+        return !i.dir?.incudes('privacy') || !!secretKey;
       });
     },
   },

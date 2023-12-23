@@ -1,4 +1,4 @@
-import { htmlMinify } from '../util';
+import { htmlMinify, getSecret } from '../util';
 import img from '../a-img';
 import './index.less';
 
@@ -23,7 +23,7 @@ export default {
     content: function () {
       const secretKey = getSecret();
       return this.img.filter((i) => {
-        return !i.dir.incudes('privacy') || !!secretKey;
+        return !i.dir?.incudes('privacy') || !!secretKey;
       });
     },
   },

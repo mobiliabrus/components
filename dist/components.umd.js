@@ -17192,7 +17192,7 @@
       type: mime
     });
   };
-  var getSecret$1 = function getSecret() {
+  var getSecret = function getSecret() {
     return localStorage.getItem("lee6's-secret");
   };
 
@@ -17343,7 +17343,7 @@
       }
     },
     data: function data() {
-      var secretKey = getSecret$1();
+      var secretKey = getSecret();
       return {
         img: undefined,
         src: undefined,
@@ -17470,7 +17470,7 @@
         loading: false,
         rawContent: undefined,
         content: undefined,
-        secretKey: getSecret$1()
+        secretKey: getSecret()
       };
     },
     beforeUnmount: function beforeUnmount() {
@@ -18056,9 +18056,10 @@
         return this.content.length > 0;
       },
       content: function content() {
-        var secretKey = getSecret$1();
+        var secretKey = getSecret();
         return this.img.filter(function (i) {
-          return !i.dir.incudes('privacy') || !!secretKey;
+          var _i$dir;
+          return !((_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.incudes('privacy')) || !!secretKey;
         });
       }
     },
@@ -18109,7 +18110,8 @@
       content: function content() {
         var secretKey = getSecret();
         return this.img.filter(function (i) {
-          return !i.dir.incudes('privacy') || !!secretKey;
+          var _i$dir;
+          return !((_i$dir = i.dir) === null || _i$dir === void 0 ? void 0 : _i$dir.incudes('privacy')) || !!secretKey;
         });
       }
     },
