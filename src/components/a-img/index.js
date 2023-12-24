@@ -41,10 +41,11 @@ const template = htmlMinify(`
 const isLocal = location.hostname === 'localhost';
 
 const baseUrl = (localSuffix = 'docs/assets/') => {
+  const repo_name = window.__img_repo_name__ || 'img';
   if (isLocal) {
-    return '/packages/img/' + localSuffix;
+    return `/packages/${repo_name}/${localSuffix}`;
   }
-  return '/img/assets/';
+  return `/${repo_name}/assets/`;
 };
 
 export default {
@@ -154,6 +155,9 @@ export default {
         }
       } else if (this.dir === 'animation') {
         this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter((_) => _).join('.');
+      } else if (this.dir === 'origin') {
+        this.srcMin = baseUrl() + this.name;
+        this.src = this.srcMin;
       } else {
         this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter((_) => _).join('.');
       }

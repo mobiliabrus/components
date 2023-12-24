@@ -17321,10 +17321,11 @@
   var isLocal = location.hostname === 'localhost';
   var baseUrl = function baseUrl() {
     var localSuffix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'docs/assets/';
+    var repo_name = window.__img_repo_name__ || 'img';
     if (isLocal) {
-      return '/packages/img/' + localSuffix;
+      return "/packages/".concat(repo_name, "/").concat(localSuffix);
     }
-    return '/img/assets/';
+    return "/".concat(repo_name, "/assets/");
   };
   var img = {
     template: template$5,
@@ -17431,6 +17432,9 @@
           this[t] = baseUrl() + 'animation/' + [this.name, suffer, 'gif'].filter(function (_) {
             return _;
           }).join('.');
+        } else if (this.dir === 'origin') {
+          this.srcMin = baseUrl() + this.name;
+          this.src = this.srcMin;
         } else {
           this[t] = baseUrl() + 'public/' + [this.name, suffer, 'webp'].filter(function (_) {
             return _;
