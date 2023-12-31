@@ -19,6 +19,7 @@ import schedule from './components/a-schedule';
 import count from './components/a-count';
 import times from './components/a-times';
 import lazyload from './components/a-lazyload';
+import bg from './components/a-bg';
 
 window.$docsify.vueComponents = {
   'a-img': img,
@@ -40,6 +41,7 @@ window.$docsify.vueComponents = {
   'a-count': count,
   'a-times': times,
   'a-lazyload': lazyload,
+  'a-bg': bg,
   ...(window.$docsify.vueComponents || {}),
 };
 
