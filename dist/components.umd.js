@@ -18364,6 +18364,20 @@
     }
   };
 
+  var bg = {
+    template: '<span :style="{background:bg, color}"><slot></slot></span>',
+    props: {
+      bg: {
+        type: String,
+        default: 'transparent'
+      },
+      color: {
+        type: String,
+        default: '#fff'
+      }
+    }
+  };
+
   window.$docsify.vueComponents = _objectSpread2({
     'a-img': img,
     'a-secret': secret,
@@ -18383,7 +18397,8 @@
     'a-schedule': schedule,
     'a-count': count,
     'a-times': times,
-    'a-lazyload': lazyload
+    'a-lazyload': lazyload,
+    'a-bg': bg
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];
