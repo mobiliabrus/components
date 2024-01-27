@@ -82,6 +82,9 @@
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
+  function _toArray(arr) {
+    return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
+  }
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -9231,14 +9234,15 @@
       var props = '';
       p.split(/\n/).forEach(function (q) {
         var _q$trim$split = q.trim().split(':'),
-          _q$trim$split2 = _slicedToArray(_q$trim$split, 2),
+          _q$trim$split2 = _toArray(_q$trim$split),
           prop = _q$trim$split2[0],
-          value = _q$trim$split2[1];
-        if (prop) {
-          if (typeof value === 'undefined') {
-            slot = prop;
-          } else {
+          rest = _q$trim$split2.slice(1);
+        var value = rest.join(':');
+        if (typeof prop === 'string') {
+          if (value) {
             props += " ".concat(prop, "=\"").concat(value, "\"");
+          } else {
+            slot = prop;
           }
         }
       });
