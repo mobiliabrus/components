@@ -1,10 +1,7 @@
-import { htmlMinify } from "./util";
+import { htmlMinify } from './util';
 
 const oneDay = 86400000;
-
-const template = htmlMinify(`<div>
-  距离{{name}}还有{{days}}
-</div>`);
+const template = htmlMinify(`<div>距离{{name}}还有{{days}}</div>`);
 
 export default {
   template,
@@ -22,14 +19,15 @@ export default {
     },
   },
   computed: {
-    days: function() {
+    days: function () {
       if (this.type === 'week') {
-        const weeks = (new Date(this.date) - new Date()) / oneDay / 7;
-        if (weeks >= 1) {
+        const days = Math.ceil((new Date(this.date) - new Date()) / oneDay);
+        const weeks = days / 7;
+        if (weeks >= 2) {
           return Math.ceil(weeks) + '周';
         }
       }
       return Math.ceil((new Date(this.date) - new Date()) / oneDay) + '天';
-    }
-  }
+    },
+  },
 };
