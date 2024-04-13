@@ -18152,7 +18152,7 @@
   };
 
   var oneDay = 86400000;
-  var template$e = htmlMinify("<div>\n  \u8DDD\u79BB{{name}}\u8FD8\u6709{{days}}\n</div>");
+  var template$e = htmlMinify("<div>\u8DDD\u79BB{{name}}\u8FD8\u6709{{days}}</div>");
   var countdown = {
     template: template$e,
     props: {
@@ -18171,8 +18171,9 @@
     computed: {
       days: function days() {
         if (this.type === 'week') {
-          var weeks = (new Date(this.date) - new Date()) / oneDay / 7;
-          if (weeks >= 1) {
+          var days = Math.ceil((new Date(this.date) - new Date()) / oneDay);
+          var weeks = days / 7;
+          if (weeks >= 2) {
             return Math.ceil(weeks) + '周';
           }
         }
