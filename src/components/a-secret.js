@@ -129,8 +129,8 @@ export default {
       headers.forEach((header) => {
         const level = Number(header.tagName.slice(-1));
         const title = header.innerText;
-        const slug = header.children[0].getAttribute('href');
-        toc.push({ level, title, slug });
+        const slug = header.children[0]?.getAttribute('href');
+        if (slug) toc.push({ level, title, slug });
       });
 
       toc[0] && toc[0].level === 1 && toc.shift();
