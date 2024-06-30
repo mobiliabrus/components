@@ -17548,10 +17548,11 @@
         var toc = [];
         var headers = document.getElementById('main').querySelectorAll('h1,h2,h3,h4,h5,h6');
         headers.forEach(function (header) {
+          var _header$children$;
           var level = Number(header.tagName.slice(-1));
           var title = header.innerText;
-          var slug = header.children[0].getAttribute('href');
-          toc.push({
+          var slug = (_header$children$ = header.children[0]) === null || _header$children$ === void 0 ? void 0 : _header$children$.getAttribute('href');
+          if (slug) toc.push({
             level: level,
             title: title,
             slug: slug
