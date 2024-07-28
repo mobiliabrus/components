@@ -18384,6 +18384,12 @@
     }
   };
 
+  var template$l = "<span :style=\"{color}\"><template v-for=\"i in size\">\u2605</template></span>";
+  var star = {
+    template: template$l,
+    props: ['size', 'color']
+  };
+
   window.$docsify.vueComponents = _objectSpread2({
     'a-img': img,
     'a-secret': secret,
@@ -18404,7 +18410,8 @@
     'a-count': count,
     'a-times': times,
     'a-lazyload': lazyload,
-    'a-bg': bg
+    'a-bg': bg,
+    'a-star': star
   }, window.$docsify.vueComponents || {});
   if (!Array.isArray(window.$docsify.plugins)) {
     window.$docsify.plugins = [];

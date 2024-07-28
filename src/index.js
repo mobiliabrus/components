@@ -20,6 +20,7 @@ import count from './components/a-count';
 import times from './components/a-times';
 import lazyload from './components/a-lazyload';
 import bg from './components/a-bg';
+import star from './components/a-star';
 
 window.$docsify.vueComponents = {
   'a-img': img,
@@ -42,6 +43,7 @@ window.$docsify.vueComponents = {
   'a-times': times,
   'a-lazyload': lazyload,
   'a-bg': bg,
+  'a-star': star,
   ...(window.$docsify.vueComponents || {}),
 };
 
