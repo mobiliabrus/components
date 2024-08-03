@@ -17646,7 +17646,7 @@
     return loader;
   }
 
-  var css_248z$4 = ".map {\n  min-height: 160px;\n}\n#bingLogo,\n#MicrosoftNav,\n.CopyrightContainer,\n.bm_bottomRightOverlay {\n  display: none !important;\n}\n";
+  var css_248z$4 = ".map {\n  min-height: 160px;\n}\n#bingLogo,\n#MicrosoftNav,\n.CopyrightContainer,\n.bm_bottomRightOverlay {\n  display: none !important;\n}\n.MicrosoftMap .bm_LogoContainer .bingLogoLight {\n  display: none !important;\n}\n";
   styleInject(css_248z$4);
 
   var apiKey =  'AmaJse0LMtAHWktKP2ew2c_NNcKEDFem3a1MWEu8xN0_fNn-alxc7q1BlLEgcQtD' ;
