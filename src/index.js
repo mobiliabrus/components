@@ -55,4 +55,13 @@ window.$docsify.plugins.push(function (hook) {
   hook.beforeEach(macau);
 });
 
+window.addEventListener('click', (e) => {
+  if (e.target.nodeName === 'A') {
+    if (e.target.className === 'section-link') {
+      const [hash] = location.hash.split('?');
+      location.hash = hash;
+    }
+  }
+});
+
 export {};

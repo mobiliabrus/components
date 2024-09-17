@@ -18419,5 +18419,15 @@
   window.$docsify.plugins.push(function (hook) {
     hook.beforeEach(macau);
   });
+  window.addEventListener('click', function (e) {
+    if (e.target.nodeName === 'A') {
+      if (e.target.className === 'section-link') {
+        var _location$hash$split = location.hash.split('?'),
+          _location$hash$split2 = _slicedToArray(_location$hash$split, 1),
+          hash = _location$hash$split2[0];
+        location.hash = hash;
+      }
+    }
+  });
 
 })));
