@@ -4,7 +4,7 @@ export default defineConfig({
   umd: {
     output: {
       path: 'dist',
-      filename: 'components.js',
+      filename: 'components.umd.min.js',
     },
     externals: {
       antd: 'antd',
