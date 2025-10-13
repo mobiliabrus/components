@@ -1,5 +1,5 @@
 import { loadBingApi } from './loader';
-import './map.less';
+import './Map.less';
 
 const apiKey =
   process.env.NODE_ENV === 'development'
