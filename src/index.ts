@@ -19,7 +19,7 @@ import schedule from './components/a-schedule';
 import count from './components/a-count';
 import times from './components/a-times';
 import lazyload from './components/a-lazyload';
-import bg from './components/a-bg';
+import bg from './components/a-bg.vue';
 import star from './components/a-star';
 
 window.$docsify.vueComponents = {
@@ -55,7 +55,7 @@ window.$docsify.plugins.push(function (hook) {
   hook.beforeEach(macau);
 });
 
-window.addEventListener('click', (e) => {
+window.addEventListener('click', (e: any) => {
   if (e.target.nodeName === 'A') {
     if (e.target.className === 'section-link') {
       const [hash] = location.hash.split('?');
