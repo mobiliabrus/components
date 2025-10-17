@@ -3,7 +3,7 @@ import macau from './macau';
 import img from './components/a-img';
 import secret from './components/a-secret';
 import flight from './components/a-flight';
-import map from './components/a-map';
+import map from './components/ol-map/index.vue';
 import hotel from './components/a-hotel';
 import carousel from './components/a-carousel';
 import badge from './components/a-badge';
