@@ -1,18 +1,20 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { useFullscreenWithScroll } from '@/composables/useFullscreenWithScroll';
 import { propsType } from './constant';
-import FullScreen from 'ol/control/FullScreen.js';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 import { parsePoint, parsePoints } from './util';
-import { Style, Text, Fill, Stroke, Circle as CircleStyle } from 'ol/style';
+import { createLabelStyle } from './helper';
 import olms from 'ol-mapbox-style';
 
 const mapRef = ref(undefined);
 const mapInstance = ref(null);
+
+const { handleFullscreen, isFullscreen } = useFullscreenWithScroll();
 
 const props = defineProps(propsType);
 const initialCenter = props.center;
@@ -21,42 +23,8 @@ const drivingData = parsePoints(props.driving);
 const walkingData = parsePoints(props.walking);
 const pointsData = parsePoints(props.points);
 
-const createLabelStyle = () => {
-  return new Style({
-    image: new CircleStyle({
-      radius: 5,
-      fill: new Fill({ color: 'rgba(255, 255, 255, 0.8)' }),
-      stroke: new Stroke({ color: '#3399CC', width: 1.5 }),
-    }),
-    text: new Text({
-      font: 'bold 14px "Open Sans", "Helvetica Neue", sans-serif',
-      textAlign: 'center',
-      textBaseline: 'bottom',
-      offsetY: -15,
-      padding: [2, 4, 2, 4],
-      fill: new Fill({
-        color: 'rgba(0, 0, 0, 1)',
-      }),
-      backgroundFill: new Fill({
-        color: 'rgba(255, 255, 255, 0.8)',
-      }),
-      backgroundStroke: new Stroke({
-        color: '#333',
-        width: 1.5,
-      }),
-      stroke: new Stroke({
-        color: 'rgba(255, 255, 255, 0.8)',
-        width: 3,
-      }),
-      fill: new Fill({
-        color: '#000',
-      }),
-      text: '',
-    }),
-  });
-};
-
-onMounted(() => {
+let fitView = () => {};
+const initMap = () => {
   olms(
     mapRef.value,
     'https://api.maptiler.com/maps/outdoor-v2/style.json?key=K18uxgT9BWfvlkwGw6VG'
@@ -65,7 +33,6 @@ onMounted(() => {
 
     // Control
     map.getControls().clear();
-    map.addControl(new FullScreen());
 
     // View
     const view = map.getView();
@@ -113,16 +80,32 @@ onMounted(() => {
     });
     map.addLayer(vectorLayer);
 
-    // Fit view
-    if (pointsData.length > 0 || drivingData.length > 0 || walkingData.length > 0) {
+    fitView = () => {
       const extent = vectorSource.getExtent();
       view.fit(extent, {
         padding: [48, 48, 48, 48],
         maxZoom: 15,
         duration: 0,
       });
+    };
+
+    // Fit view
+    if (pointsData.length > 0 || drivingData.length > 0 || walkingData.length > 0) {
+      fitView();
     }
   });
+};
+
+const handleFullscreenClick = () => {
+  handleFullscreen(mapRef.value);
+};
+
+watch(isFullscreen, () => {
+  setTimeout(fitView, 0);
+});
+
+onMounted(() => {
+  initMap();
 });
 
 onBeforeUnmount(() => {
@@ -134,16 +117,44 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="mapRef" class="map-container" />
+  <div ref="mapRef" class="map-container">
+    <div class="fullscreen-hint" v-if="!isFullscreen" @click="handleFullscreenClick" />
+    <div class="fullscreen-exit" v-else @click="handleFullscreenClick">×</div>
+  </div>
 </template>
 
 <style scoped>
 .map-container {
+  position: relative;
   background-color: #f0f0f0;
   width: 100%;
   height: 20vw;
   min-height: 160px;
   border: 1px solid #ccc;
   overflow: hidden;
+}
+
+.fullscreen-hint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 9007199254740991;
+}
+
+.fullscreen-exit {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 18px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  z-index: 9007199254740991;
 }
 </style>
