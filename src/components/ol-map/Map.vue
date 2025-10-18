@@ -4,11 +4,10 @@ import { useFullscreenWithScroll } from '@/composables/useFullscreenWithScroll';
 import { propsType } from './constant';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 import { parsePoint, parsePoints } from './util';
 import { createLabelStyle } from './helper';
+import { createPoints } from './sources/points';
 import olms from 'ol-mapbox-style';
 
 const mapRef = ref(undefined);
@@ -17,8 +16,11 @@ const mapInstance = ref(null);
 const { handleFullscreen, isFullscreen } = useFullscreenWithScroll();
 
 const props = defineProps(propsType);
+const theme = props.theme;
 const initialCenter = props.center;
 const initialZoom = props.zoom;
+const mapHeight = props.height;
+const mapPadding = props.padding;
 const drivingData = parsePoints(props.driving);
 const walkingData = parsePoints(props.walking);
 const pointsData = parsePoints(props.points);
@@ -27,7 +29,7 @@ let fitView = () => {};
 const initMap = () => {
   olms(
     mapRef.value,
-    'https://api.maptiler.com/maps/outdoor-v2/style.json?key=K18uxgT9BWfvlkwGw6VG'
+    `https://api.maptiler.com/maps/${theme}/style.json?key=K18uxgT9BWfvlkwGw6VG`
   ).then((map) => {
     mapInstance.value = map;
 
@@ -39,34 +41,11 @@ const initMap = () => {
     if (initialCenter) view.setCenter(fromLonLat(parsePoint(initialCenter)));
     if (initialZoom) view.setZoom(initialZoom);
 
+    // Vector
     const vectorSource = new VectorSource();
-
-    // Points
-    pointsData.forEach(([lng, lat, label]) => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([lng, lat])),
-      });
-      feature.set('label', label);
-      vectorSource.addFeature(feature);
-    });
-
-    // Driving
-    drivingData.forEach(([lng, lat, label]) => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([lng, lat])),
-      });
-      feature.set('label', label);
-      vectorSource.addFeature(feature);
-    });
-
-    // Walking
-    walkingData.forEach(([lng, lat, label]) => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([lng, lat])),
-      });
-      feature.set('label', label);
-      vectorSource.addFeature(feature);
-    });
+    createPoints(vectorSource, pointsData);
+    createPoints(vectorSource, drivingData);
+    createPoints(vectorSource, walkingData);
 
     // Layer
     const labelStyle = createLabelStyle();
@@ -78,12 +57,13 @@ const initMap = () => {
         return style;
       },
     });
+
     map.addLayer(vectorLayer);
 
     fitView = () => {
       const extent = vectorSource.getExtent();
       view.fit(extent, {
-        padding: [48, 48, 48, 48],
+        padding: mapPadding,
         maxZoom: 15,
         duration: 0,
       });
@@ -117,18 +97,24 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="mapRef" class="map-container">
+  <div ref="mapRef" class="map-container" :style="{ height: mapHeight }">
     <div class="fullscreen-hint" v-if="!isFullscreen" @click="handleFullscreenClick" />
     <div class="fullscreen-exit" v-else @click="handleFullscreenClick">×</div>
   </div>
 </template>
+
+<style>
+.ol-overlaycontainer-stopevent {
+  display: none;
+}
+</style>
 
 <style scoped>
 .map-container {
   position: relative;
   background-color: #f0f0f0;
   width: 100%;
-  height: 20vw;
+  height: 30vw;
   min-height: 160px;
   border: 1px solid #ccc;
   overflow: hidden;
@@ -146,8 +132,8 @@ onBeforeUnmount(() => {
 
 .fullscreen-exit {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 18px;
+  right: 18px;
   width: 18px;
   height: 18px;
   line-height: 18px;
