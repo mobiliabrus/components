@@ -1,9 +1,8 @@
-// composables/useFullscreenWithScroll.js
-
 import { ref, onMounted, onUnmounted } from 'vue';
 
 export function useFullscreenWithScroll() {
   const isFullscreen = ref(false);
+  let pageYOffset = window.pageYOffset;
 
   const handleFullscreen = (element) => {
     if (!element) return;
@@ -20,9 +19,11 @@ export function useFullscreenWithScroll() {
       } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
       }
+      setTimeout(() => {
+        window.scrollTo({ top: pageYOffset });
+      }, 100);
     } else {
-      savedScrollTop = window.pageYOffset;
-
+      pageYOffset = window.pageYOffset;
       if (element.requestFullscreen) {
         element.requestFullscreen();
       } else if (element.webkitRequestFullscreen) {
@@ -33,23 +34,13 @@ export function useFullscreenWithScroll() {
     }
   };
 
-  let savedScrollTop = 0;
-
   const updateFullscreenState = () => {
     const fullscreenElement =
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
       document.mozFullScreenElement ||
       document.msFullscreenElement;
-
-    if (fullscreenElement) {
-      isFullscreen.value = true;
-    } else {
-      setTimeout(() => {
-        window.scrollTo(0, savedScrollTop);
-      }, 50);
-      isFullscreen.value = false;
-    }
+    isFullscreen.value = !!fullscreenElement;
   };
 
   onMounted(() => {
