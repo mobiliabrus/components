@@ -13,25 +13,27 @@ export const createRoute = (vectorSource, routeJSON: string) => {
   if (route) {
     const coordinates = route.geometry.coordinates;
 
-    const geojsonFormat = new GeoJSON();
-    const routeFeature = geojsonFormat.readFeature(
-      {
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: coordinates,
+    if (coordinates) {
+      const geojsonFormat = new GeoJSON();
+      const routeFeature = geojsonFormat.readFeature(
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates,
+          },
+          properties: {
+            name: 'Driving Route',
+            distance: (route.distance / 1000).toFixed(2) + ' km',
+            duration: (route.duration / 60).toFixed(1) + ' min',
+          },
         },
-        properties: {
-          name: 'Driving Route',
-          distance: (route.distance / 1000).toFixed(2) + ' km',
-          duration: (route.duration / 60).toFixed(1) + ' min',
-        },
-      },
-      {
-        featureProjection: 'EPSG:3857',
-      }
-    );
+        {
+          featureProjection: 'EPSG:3857',
+        }
+      );
 
-    vectorSource.addFeature(routeFeature);
+      vectorSource.addFeature(routeFeature);
+    }
   }
 };
