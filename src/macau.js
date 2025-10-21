@@ -4,11 +4,12 @@ function macau(raw) {
     let slot = '';
     let props = '';
     p.split(/\n/).forEach((q) => {
-      const [prop, ...rest] = q.trim().split(':');
+      const isBind = q.indexOf(':') === 0;
+      const [prop, ...rest] = q.replace(/^:/, '').trim().split(':');
       const value = rest.join(':');
       if (typeof prop === 'string') {
         if (value) {
-          props += ` ${prop}="${escapeAttr(value)}"`;
+          props += ` ${isBind ? ':' : ''}${prop}="${escapeAttr(value)}"`;
         } else {
           slot = prop;
         }
@@ -19,10 +20,7 @@ function macau(raw) {
 }
 
 function escapeAttr(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 export default macau;
