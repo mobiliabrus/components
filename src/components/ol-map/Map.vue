@@ -4,8 +4,7 @@ import { useFullscreenWithScroll } from '@/composables/useFullscreenWithScroll';
 import { propsType } from './constant';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import { fromLonLat } from 'ol/proj';
-import { parsePoint, parsePoints } from './util';
+import { parsePoints } from './util';
 import { createPoints } from './sources/points';
 import { createRoute } from './sources/route';
 import { style } from './style';
@@ -18,8 +17,6 @@ const { handleFullscreen, isFullscreen } = useFullscreenWithScroll();
 
 const props = defineProps(propsType);
 const theme = props.theme;
-const initialCenter = props.center;
-const initialZoom = props.zoom;
 const mapHeight = props.height;
 const mapPadding = props.padding;
 const routeJSON = props.route;
@@ -40,8 +37,6 @@ const initMap = () => {
 
     // View
     const view = map.getView();
-    if (initialCenter) view.setCenter(fromLonLat(parsePoint(initialCenter)));
-    if (initialZoom) view.setZoom(initialZoom);
 
     // Vector
     const vectorSource = new VectorSource();

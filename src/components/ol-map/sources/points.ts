@@ -7,7 +7,7 @@ export const createPoints = (vectorSource, pointsData: any[]) => {
     const feature = new Feature({
       geometry: new Point(fromLonLat([lng, lat])),
     });
-    feature.set('label', label);
+    feature.set('label', label || '-');
     vectorSource.addFeature(feature);
   });
 };
