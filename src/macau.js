@@ -8,7 +8,7 @@ function macau(raw) {
       const value = rest.join(':');
       if (typeof prop === 'string') {
         if (value) {
-          props += ` ${prop}="${value}"`;
+          props += ` ${prop}="${escapeAttr(value)}"`;
         } else {
           slot = prop;
         }
@@ -16,6 +16,13 @@ function macau(raw) {
     });
     return `<${c}${props}>${slot}</${c}>`;
   });
+}
+
+function escapeAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 export default macau;
