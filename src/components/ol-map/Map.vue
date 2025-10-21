@@ -6,8 +6,9 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import { parsePoint, parsePoints } from './util';
-import { createLabelStyle } from './helper';
 import { createPoints } from './sources/points';
+import { createRoute } from './sources/route';
+import { style } from './style';
 import olms from 'ol-mapbox-style';
 
 const mapRef = ref(undefined);
@@ -21,6 +22,7 @@ const initialCenter = props.center;
 const initialZoom = props.zoom;
 const mapHeight = props.height;
 const mapPadding = props.padding;
+const routeJSON = props.route;
 const drivingData = parsePoints(props.driving);
 const walkingData = parsePoints(props.walking);
 const pointsData = parsePoints(props.points);
@@ -46,16 +48,13 @@ const initMap = () => {
     createPoints(vectorSource, pointsData);
     createPoints(vectorSource, drivingData);
     createPoints(vectorSource, walkingData);
+    createRoute(vectorSource, routeJSON);
 
     // Layer
-    const labelStyle = createLabelStyle();
     const vectorLayer = new VectorLayer({
       source: vectorSource,
-      style: function (feature) {
-        const style = labelStyle.clone();
-        style.getText().setText(feature.get('label'));
-        return style;
-      },
+      style,
+      zIndex: 10,
     });
 
     map.addLayer(vectorLayer);

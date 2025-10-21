@@ -40,6 +40,10 @@ export const propsType = {
     type: String,
     default: null,
   },
+  route: {
+    type: String,
+    default: null,
+  },
   height: {
     type: String,
     default: null,
