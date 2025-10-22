@@ -36,6 +36,10 @@ export const propsType = {
     type: String,
     default: null,
   },
+  flights: {
+    type: String,
+    default: null,
+  },
   height: {
     type: String,
     default: null,

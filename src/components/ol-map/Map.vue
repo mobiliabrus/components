@@ -4,9 +4,10 @@ import { useFullscreenWithScroll } from '@/composables/useFullscreenWithScroll';
 import { propsType } from './constant';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import { parsePoints } from './util';
+import { parsePoints, parseFlights } from './util';
 import { createPoints } from './sources/points';
 import { createRoute } from './sources/route';
+import { createFlights } from './sources/flights';
 import { style } from './style';
 import olms from 'ol-mapbox-style';
 
@@ -20,6 +21,7 @@ const theme = props.theme;
 const mapHeight = props.height;
 const mapPadding = props.padding;
 const routeJSON = props.route;
+const flightsData = parseFlights(props.flights);
 const drivingData = parsePoints(props.driving);
 const walkingData = parsePoints(props.walking);
 const pointsData = parsePoints(props.points);
@@ -44,6 +46,7 @@ const initMap = () => {
     createPoints(vectorSource, drivingData);
     createPoints(vectorSource, walkingData);
     createRoute(vectorSource, routeJSON);
+    createFlights(vectorSource, flightsData);
 
     // Layer
     const vectorLayer = new VectorLayer({
