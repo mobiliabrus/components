@@ -4,6 +4,7 @@ import { useFullscreenWithScroll } from '@/composables/useFullscreenWithScroll';
 import { propsType } from './constant';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
+import Close from '../a-close';
 import { parsePoints, parseFlights } from './util';
 import { createPoints } from './sources/points';
 import { createRoute } from './sources/route';
@@ -96,7 +97,7 @@ onBeforeUnmount(() => {
 <template>
   <div ref="mapRef" class="map-container" :style="{ height: mapHeight }">
     <div class="fullscreen-hint" v-if="!isFullscreen" @click="handleFullscreenClick" />
-    <div class="fullscreen-exit" v-else @click="handleFullscreenClick">×</div>
+    <div class="fullscreen-exit" v-else @click="handleFullscreenClick"><Close /></div>
   </div>
 </template>
 
@@ -129,15 +130,11 @@ onBeforeUnmount(() => {
 
 .fullscreen-exit {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  font-size: 18px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.2);
-  color: #fff;
+  top: 15px;
+  right: 15px;
+  width: 25px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.25);
   z-index: 9007199254740991;
 }
 </style>
