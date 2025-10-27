@@ -61,7 +61,7 @@ const initMap = () => {
       const extent = vectorSource.getExtent();
       view.fit(extent, {
         padding: mapPadding,
-        maxZoom: 15,
+        maxZoom: 18,
         duration: 0,
       });
     };

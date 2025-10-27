@@ -46,6 +46,6 @@ export const propsType = {
   },
   padding: {
     type: Array<number>,
-    default: [48, 24, 24, 24],
+    default: [48, 88, 24, 88],
   },
 };
