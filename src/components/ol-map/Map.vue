@@ -19,6 +19,7 @@ const { handleFullscreen, isFullscreen } = useFullscreenWithScroll();
 
 const props = defineProps(propsType);
 const theme = props.theme;
+const maxZoom = props.zoom;
 const mapHeight = props.height;
 const mapPadding = props.padding;
 const routeJSON = props.route;
@@ -62,7 +63,7 @@ const initMap = () => {
       const extent = vectorSource.getExtent();
       view.fit(extent, {
         padding: mapPadding,
-        maxZoom: 18,
+        maxZoom: maxZoom || 18,
         duration: 0,
       });
     };

@@ -20,6 +20,10 @@ export const propsType = {
     type: String as PropType<VectorStyle>,
     default: 'streets-v2',
   },
+  zoom: {
+    type: Number,
+    default: null,
+  },
   points: {
     type: String,
     default: null,
