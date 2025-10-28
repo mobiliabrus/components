@@ -28,11 +28,7 @@ export const propsType = {
     type: String,
     default: null,
   },
-  driving: {
-    type: String,
-    default: null,
-  },
-  walking: {
+  divesites: {
     type: String,
     default: null,
   },

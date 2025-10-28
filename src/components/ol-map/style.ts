@@ -4,8 +4,16 @@ import Fill from 'ol/style/Fill';
 import Text from 'ol/style/Text';
 import CircleStyle from 'ol/style/Circle';
 
+export const textBaseStyle = {
+  font: '12px Arial',
+  fill: new Fill({ color: '#000' }),
+  stroke: new Stroke({ color: '#fff', width: 2 }),
+  offsetY: -15,
+  backgroundFill: new Fill({ color: 'rgba(255, 255, 255, 0.7)' }),
+  padding: [2, 4, 2, 4],
+};
 
-export function style(feature) {
+export function style(feature: any) {
   const geometry = feature.getGeometry();
   const label = feature.get('label'); // 假设点要素有 'label' 属性
 
@@ -29,12 +37,7 @@ export function style(feature) {
       new Style({
         text: new Text({
           text: label,
-          font: '12px Arial',
-          fill: new Fill({ color: '#000' }),
-          stroke: new Stroke({ color: '#fff', width: 2 }),
-          offsetY: -15,
-          backgroundFill: new Fill({ color: 'rgba(255, 255, 255, 0.7)' }),
-          padding: [2, 4, 2, 4],
+          ...textBaseStyle,
         }),
         image: new CircleStyle({
           radius: 5,

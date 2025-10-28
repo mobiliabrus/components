@@ -1,6 +1,6 @@
 import { GeoJSON } from 'ol/format';
 
-export const createRoute = (vectorSource, routeJSON: string) => {
+export const createRoute = (vectorSource: any, routeJSON: string) => {
   let route;
   if (typeof routeJSON === 'string') {
     try {

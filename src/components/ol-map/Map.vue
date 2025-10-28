@@ -10,6 +10,7 @@ import { createPoints } from './sources/points';
 import { createRoute } from './sources/route';
 import { createFlights } from './sources/flights';
 import { style } from './style';
+import diveSiteIcon from './statics/divesite';
 import olms from 'ol-mapbox-style';
 
 const mapRef = ref(undefined);
@@ -24,8 +25,7 @@ const mapHeight = props.height;
 const mapPadding = props.padding;
 const routeJSON = props.route;
 const flightsData = parseFlights(props.flights);
-const drivingData = parsePoints(props.driving);
-const walkingData = parsePoints(props.walking);
+const diveSitesData = parsePoints(props.divesites);
 const pointsData = parsePoints(props.points);
 
 let fitView = () => {};
@@ -45,8 +45,7 @@ const initMap = () => {
     // Vector
     const vectorSource = new VectorSource();
     createPoints(vectorSource, pointsData);
-    createPoints(vectorSource, drivingData);
-    createPoints(vectorSource, walkingData);
+    createPoints(vectorSource, diveSitesData, { url: diveSiteIcon });
     createRoute(vectorSource, routeJSON);
     createFlights(vectorSource, flightsData);
 
@@ -69,7 +68,7 @@ const initMap = () => {
     };
 
     // Fit view
-    if (pointsData.length > 0 || drivingData.length > 0 || walkingData.length > 0) {
+    if (pointsData.length > 0 || diveSitesData.length > 0) {
       fitView();
     }
   });
