@@ -68,7 +68,7 @@ const initMap = () => {
     };
 
     // Fit view
-    if (pointsData.length > 0 || diveSitesData.length > 0) {
+    if (routeJSON || flightsData || pointsData.length > 0 || diveSitesData.length > 0) {
       fitView();
     }
   });
