@@ -4,20 +4,20 @@ export function useFullscreenWithScroll() {
   const isFullscreen = ref(false);
   let pageYOffset = window.pageYOffset;
 
-  const handleFullscreen = (element) => {
+  const handleFullscreen = (element: Element) => {
     if (!element) return;
 
     if (
       document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.msFullscreenElement
+      (document as any).webkitFullscreenElement ||
+      (document as any).msFullscreenElement
     ) {
       if (document.exitFullscreen) {
         document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
       }
       setTimeout(() => {
         window.scrollTo({ top: pageYOffset });
@@ -26,10 +26,10 @@ export function useFullscreenWithScroll() {
       pageYOffset = window.pageYOffset;
       if (element.requestFullscreen) {
         element.requestFullscreen();
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
+      } else if ((document as any).webkitRequestFullscreen) {
+        (document as any).webkitRequestFullscreen();
+      } else if ((document as any).msRequestFullscreen) {
+        (document as any).msRequestFullscreen();
       }
     }
   };
@@ -37,9 +37,9 @@ export function useFullscreenWithScroll() {
   const updateFullscreenState = () => {
     const fullscreenElement =
       document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement ||
-      document.msFullscreenElement;
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement;
     isFullscreen.value = !!fullscreenElement;
   };
 
