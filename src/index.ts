@@ -21,6 +21,7 @@ import times from './components/a-times';
 import lazyload from './components/a-lazyload';
 import bg from './components/a-bg.vue';
 import star from './components/a-star';
+import LaTeX from './components/a-latex/index.vue';
 
 window.$docsify.vueComponents = {
   'a-img': img,
@@ -44,6 +45,7 @@ window.$docsify.vueComponents = {
   'a-lazyload': lazyload,
   'a-bg': bg,
   'a-star': star,
+  'a-latex': LaTeX,
   ...(window.$docsify.vueComponents || {}),
 };
 
