@@ -8,6 +8,7 @@ const template = htmlMinify(`
 </template>
 <template v-if="!visible">
   <span
+    aria-hidden="true"
     v-if="this.blackout || this.content"
     @click="decrypt"
     style="

@@ -1,7 +1,7 @@
 import { htmlMinify } from "../util";
 import "./index.css";
 
-const template = htmlMinify(`<div class="a-flight">
+const template = htmlMinify(`<div class="a-flight" aria-hidden="true">
 <div class="a-flight-no"><span>{{ this.flight }}</span></div>
 <div class="am-steps am-steps-horizontal am-steps-label-vertical">
 <div class="am-steps-item am-steps-item-process am-steps-item-custom">

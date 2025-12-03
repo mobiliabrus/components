@@ -1,6 +1,6 @@
 import { htmlMinify } from "../util";
 
-const template = htmlMinify(`<div><div><b>{{this.name}}</b></div><div @click="this.switchDetail" style="margin-bottom:16px">
+const template = htmlMinify(`<div aria-hidden="true"><div><b>{{this.name}}</b></div><div @click="this.switchDetail" style="margin-bottom:16px">
 <i>{{this.from}}</i>
 <i>{{this.to}}</i>
 </div></div>`);

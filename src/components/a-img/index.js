@@ -7,7 +7,7 @@ import { htmlMinify, base64ToFile, getSecret } from '../util';
 import './index.less';
 
 const template = htmlMinify(`
-<a-lazyload @load="onLoad">
+<a-lazyload @load="onLoad" aria-hidden="true">
   <a-placeholder v-if="visible && (!src && !srcMin)"></a-placeholder>
   <a-modal v-if="!loading || (src || srcMin)" :scale="scale">
     <template v-slot:action>

@@ -3,7 +3,7 @@ import img from '../a-img';
 import './index.less';
 
 const template = htmlMinify(`
-<div class="gallery" v-if="visible">
+<div class="gallery" v-if="visible" aria-hidden="true">
 <div class="gallery-item" v-for="i in content" :style="{width}">
 <a-img :name="i.name" :dir="i.dir" :key="i.name"></a-img>
 </div>

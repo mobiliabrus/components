@@ -5,7 +5,7 @@ import './index.less';
 
 const template = htmlMinify(`
 <Teleport :disabled="!visible" to="body">
-  <div style="line-height:initial">
+  <div style="line-height:initial" aria-hidden="true">
     <div v-if="visible" class="a-modal-wrapper">
       <div class="a-modal-close" @click="this.close">
         <v-close></v-close>
